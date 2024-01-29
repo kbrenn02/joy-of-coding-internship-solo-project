@@ -1,25 +1,68 @@
 'use client';
 
-import { Button, TextArea, TextField } from '@radix-ui/themes'
-import React from 'react'
+import { Button, TextField } from '@radix-ui/themes'
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+
+interface TaskForm {
+    title: string;
+    description: string;
+    due: Date;
+}
+
+
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const NewTaskPage = () => {
-  return (
-    <div className='max-w-xl space-y-3'>
-        <TextField.Root>
-            <TextField.Input placeholder='Title'>
+    const router = useRouter();
 
-            </TextField.Input>
-        </TextField.Root>
-        <TextField.Input placeholder='Due Date > YYYY-MM-DD'>
+    /* issue: I can get the date but because the Calendar is an imported component, it can't follow the 
+        instructions from the video to push the data to the database. If I have this data, how would I push this
+        or should I give up and just make it a string object
+    */
+    const [dueDate, onChange] = useState<Value>(new Date());
+    console.log(dueDate)
 
-        </TextField.Input>
-        <TextArea placeholder='Description'>
+    const {register, control, handleSubmit} = useForm<TaskForm>();
 
-        </TextArea>
-        <Button>Submit New Task</Button>
-    </div>
-  )
+    return (
+        <form 
+            className='max-w-xl space-y-3' 
+            onSubmit={handleSubmit(async (data) => {
+                await axios.post('/api/tasks', data);
+                router.push('/tasks')
+            })}>
+            
+            {/* Title input */}
+            <TextField.Root>
+                <TextField.Input placeholder='Title' {...register('title')}>
+
+                </TextField.Input>
+            </TextField.Root>
+
+            {/* Description input */}
+            <Controller
+                name='description'
+                control={control}
+                render={({ field }) => <SimpleMDE placeholder='Description' {...field}/>}
+            />
+            
+
+            {/* Due date input */}
+            <h2 className='font-bold underline underline-offset-2'>Select a due date for this task</h2>
+            <Calendar onChange={onChange} value={dueDate}/> 
+            
+            <Button>Submit New Task</Button>
+        </form>
+    )
 }
 
 export default NewTaskPage

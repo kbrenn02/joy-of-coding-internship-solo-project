@@ -16,7 +16,7 @@ model Task {
   title       String   @db.VarChar(255)
   description String   @db.Text
   status      Status   @default(OPEN)
-  due         String   @db.VarChar(255)
+  due         DateTime @db.Date
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
