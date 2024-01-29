@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
+
+// to fix this whole page, just wanted to have outline present
+
 
 const dataTable = () => {
     const express = require('express'); 
@@ -25,9 +28,24 @@ const dataTable = () => {
     }); 
   
   
-    return (
-        <div>dataTable</div>
-    )
+    const [data, setData] = useState([]); 
+ 
+    useEffect(() => { 
+        fetch('/api/data') 
+        .then(response => response.json()) 
+        .then(data => setData(data)); 
+    }, []); 
+    
+    return ( 
+        <div> 
+        {data.map(item => ( 
+            <div key={item.id}> 
+            <h2>{item.title}</h2> 
+            <p>{item.description}</p> 
+            </div> 
+        ))} 
+        </div> 
+    ); 
 }
 
 export default dataTable
