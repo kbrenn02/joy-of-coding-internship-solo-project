@@ -16,13 +16,16 @@ interface TaskForm {
     due: Date;
 }
 
-
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
+type FormValues = {
+    due: Date;
+}
+
 const NewTaskPage = () => {
-    const router = useRouter();
+    // const router = useRouter();
 
     /* issue: I can get the date but because the Calendar is an imported component, it can't follow the 
         instructions from the video to push the data to the database. If I have this data, how would I push this
@@ -32,13 +35,18 @@ const NewTaskPage = () => {
     console.log(dueDate)
 
     const {register, control, handleSubmit} = useForm<TaskForm>();
+    const form = useForm<FormValues>({
+        defaultValues: {
+            due: new Date(),
+        }
+    })
 
     return (
         <form 
             className='max-w-xl space-y-3' 
             onSubmit={handleSubmit(async (data) => {
                 await axios.post('/api/tasks', data);
-                router.push('/tasks')
+                // router.push('/tasks');
             })}>
             
             {/* Title input */}
@@ -57,8 +65,21 @@ const NewTaskPage = () => {
             
 
             {/* Due date input */}
-            <h2 className='font-bold underline underline-offset-2'>Select a due date for this task</h2>
-            <Calendar onChange={onChange} value={dueDate}/> 
+            <div className='m-4'>
+                <label className='p-4 font-bold italic' htmlFor='due'>Select a due date for this task</label>
+                <input 
+                  className='ml-5'
+                  type="date"
+                  id="due"
+                  {...register('due', {
+                    valueAsDate: true,
+                    required: {
+                        value: true,
+                        message: "A due date for this task is required."
+                    },
+                  })}
+                />
+            </div>
             
             <Button>Submit New Task</Button>
         </form>
