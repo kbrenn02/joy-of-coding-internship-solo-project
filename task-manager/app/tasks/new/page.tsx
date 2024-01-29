@@ -3,12 +3,9 @@
 import { Button, TextField } from '@radix-ui/themes'
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 interface TaskForm {
     title: string;
@@ -16,23 +13,12 @@ interface TaskForm {
     due: Date;
 }
 
-type ValuePiece = Date | null;
-
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
 type FormValues = {
     due: Date;
 }
 
 const NewTaskPage = () => {
-    // const router = useRouter();
-
-    /* issue: I can get the date but because the Calendar is an imported component, it can't follow the 
-        instructions from the video to push the data to the database. If I have this data, how would I push this
-        or should I give up and just make it a string object
-    */
-    const [dueDate, onChange] = useState<Value>(new Date());
-    console.log(dueDate)
+    const router = useRouter();
 
     const {register, control, handleSubmit} = useForm<TaskForm>();
     const form = useForm<FormValues>({
@@ -46,7 +32,7 @@ const NewTaskPage = () => {
             className='max-w-xl space-y-3' 
             onSubmit={handleSubmit(async (data) => {
                 await axios.post('/api/tasks', data);
-                // router.push('/tasks');
+                router.push('/tasks');
             })}>
             
             {/* Title input */}
@@ -68,7 +54,7 @@ const NewTaskPage = () => {
             <div className='m-4'>
                 <label className='p-4 font-bold italic' htmlFor='due'>Select a due date for this task</label>
                 <input 
-                  className='ml-5'
+                  className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                   type="date"
                   id="due"
                   {...register('due', {
