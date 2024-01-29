@@ -5,7 +5,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// make suer to update the provider to whichever database provider you use
+// make sure to update the provider to whichever database provider you use
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -16,7 +16,7 @@ model Task {
   title       String   @db.VarChar(255)
   description String   @db.Text
   status      Status   @default(OPEN)
-  due         DateTime @db.Date
+  due         String   @db.VarChar(255)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createTaskSchema } from "../../validationSchema";
 import prisma from "@/prisma/client";
 
+// Function used to post information to the DB
 export async function POST(request: NextRequest) {
     const body = await request.json();
     const validation = createTaskSchema.safeParse(body); // see point 1 below
@@ -26,9 +27,4 @@ export async function POST(request: NextRequest) {
     This information goes to the server and the server checks if the information (aka request) is valid
     If the request is valid, the server sends a response. In this case, the response is adding the newTask to the database and gives a success message
     Request: Client to Server, Response: Server to client
-
-
-
-
-
 */
