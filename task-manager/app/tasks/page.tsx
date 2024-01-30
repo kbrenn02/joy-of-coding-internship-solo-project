@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Table } from '@radix-ui/themes';
 import Link from 'next/link';
-import axios from 'axios'
+import prisma from '@/prisma/client';
 
-const TasksPage = () => {
-    // const url = 'mysql://root:Kevin176-434-100-08@localhost:3306/task-manager';
-    // const [data, setData] = useState([])
-
-    // const fetchInfo = () => { 
-    //     return axios.get(url).then((response) => setData(response.data));
-    //   }
-      
-    //   useEffect(() => { 
-    //         fetchInfo(); 
-    //   }, [])
+const TasksPage = async() => {
     
+    // had to look at prisma documentation to get this "findMany()." Refer there for other features
+    const tasks = await prisma.task.findMany()
+
+
     return (
         <>
             <div className='ml-4'>
@@ -31,16 +25,16 @@ const TasksPage = () => {
                     </Table.Row>
                 </Table.Header>
 
-                {/* <Table.Body>
-                    {data.map((data) =>
+                <Table.Body>
+                    {tasks.map((task) =>
                         <Table.Row>
-                            <Table.RowHeaderCell>{data.due}</Table.RowHeaderCell>
-                            <Table.Cell>{data.status}</Table.Cell>
-                            <Table.Cell>{data.title}</Table.Cell>
-                            <Table.Cell>{data.description}</Table.Cell>
+                            <Table.RowHeaderCell>{task.due.toDateString()}</Table.RowHeaderCell>
+                            <Table.Cell>{task.status}</Table.Cell>
+                            <Table.Cell>{task.title}</Table.Cell>
+                            <Table.Cell>{task.description}</Table.Cell>
                         </Table.Row>
                     )}
-                </Table.Body> */}
+                </Table.Body>
             </Table.Root>
 
         </>
