@@ -6,6 +6,7 @@ import prisma from '@/prisma/client';
 const TasksPage = async() => {
     
     // had to look at prisma documentation to get this "findMany()." Refer there for other features
+    // tasks is a variable that contains all the data in the table. See note below for tasks.map
     const tasks = await prisma.task.findMany()
 
 
@@ -25,6 +26,9 @@ const TasksPage = async() => {
                     </Table.Row>
                 </Table.Header>
 
+                {/* tasks.map(task) is a function that goes through every line of data. Task.XXX calls the data
+                with that specific header. This function has an issue showing date types, so task.due.toDateString() 
+                is needed to turn the date type to a string type*/}
                 <Table.Body>
                     {tasks.map((task) =>
                         <Table.Row>
