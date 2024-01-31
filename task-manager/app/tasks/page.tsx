@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Table } from '@radix-ui/themes';
+import { Button, Table, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
 import prisma from '@/prisma/client';
 
@@ -23,6 +23,7 @@ const TasksPage = async() => {
                         <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell>Task Title</Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell>Description</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
                     </Table.Row>
                 </Table.Header>
 
@@ -36,6 +37,16 @@ const TasksPage = async() => {
                             <Table.Cell>{task.status}</Table.Cell>
                             <Table.Cell>{task.title}</Table.Cell>
                             <Table.Cell>{task.description}</Table.Cell>
+                            <Table.Cell>
+                                <Flex gap="2">
+                                    <Button className='w-1/2'>
+                                        Edit
+                                    </Button>
+                                    <Button className='w-1/2' color="red">
+                                        Delete
+                                    </Button>
+                                </Flex>
+                            </Table.Cell>
                         </Table.Row>
                     )}
                 </Table.Body>
