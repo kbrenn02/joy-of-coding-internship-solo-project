@@ -9,8 +9,7 @@ const TasksPage = async() => {
     // tasks is a variable that contains all the data in the table. See note below for tasks.map
     const tasks = await prisma.task.findMany()
 
-    // const [editing, setEditing] = useState(false);
-    const editing = false
+    const [editing, setEditing] = useState(false);
     console.log(editing)
 
     return (
@@ -38,27 +37,25 @@ const TasksPage = async() => {
                         <Table.Row>
                             {/* edit the due date row */}
                             <Table.RowHeaderCell>
-                                {editing ? {/* function that happens when the edit button is selected */} : <span>{task.due.toDateString()}</span>}
+                                {editing ? <input defaultValue={task.due.toDateString()}></input> : <span>{task.due.toDateString()}</span>}
                             </Table.RowHeaderCell>
                             {/* edit the status row */}
                             <Table.Cell>
-                                {editing ? {/* function that happens when the edit button is selected */} : <span>{task.status}</span>}
+                                {editing ? <input defaultValue={task.status}></input> : <span>{task.status}</span>}
                             </Table.Cell>
                             {/* edit the title row */}
                             <Table.Cell>
-                                {editing ? {/* function that happens when the edit button is selected */} : <span>{task.title}</span>}
+                                {editing ? <input defaultValue={task.title}></input> : <span>{task.title}</span>}
                             </Table.Cell>
                             {/* edit the description row */}
                             <Table.Cell>
-                                {editing ? {/* function that happens when the edit button is selected */} : <span>{task.description}</span>}
+                                {editing ? <input defaultValue={task.description}></input> : <span>{task.description}</span>}
                             </Table.Cell>
                             <Table.Cell>
                                 <Flex gap="2">
                                     <Button 
-                                      className='w-1/2'>
-                                      onClick={()=> 
-                                        num = {task.id}
-                                        }>
+                                      className='w-1/2'
+                                      onClick={() => setEditing(true)}>
                                         Edit
                                     </Button>
                                     <Button className='w-1/2' color="red">
