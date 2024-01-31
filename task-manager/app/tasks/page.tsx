@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button, Table, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
 import prisma from '@/prisma/client';
@@ -9,6 +9,9 @@ const TasksPage = async() => {
     // tasks is a variable that contains all the data in the table. See note below for tasks.map
     const tasks = await prisma.task.findMany()
 
+    // const [editing, setEditing] = useState(false);
+    const editing = false
+    console.log(editing)
 
     return (
         <>
@@ -33,13 +36,29 @@ const TasksPage = async() => {
                 <Table.Body>
                     {tasks.map((task) =>
                         <Table.Row>
-                            <Table.RowHeaderCell>{task.due.toDateString()}</Table.RowHeaderCell>
-                            <Table.Cell>{task.status}</Table.Cell>
-                            <Table.Cell>{task.title}</Table.Cell>
-                            <Table.Cell>{task.description}</Table.Cell>
+                            {/* edit the due date row */}
+                            <Table.RowHeaderCell>
+                                {editing ? {/* function that happens when the edit button is selected */} : <span>{task.due.toDateString()}</span>}
+                            </Table.RowHeaderCell>
+                            {/* edit the status row */}
+                            <Table.Cell>
+                                {editing ? {/* function that happens when the edit button is selected */} : <span>{task.status}</span>}
+                            </Table.Cell>
+                            {/* edit the title row */}
+                            <Table.Cell>
+                                {editing ? {/* function that happens when the edit button is selected */} : <span>{task.title}</span>}
+                            </Table.Cell>
+                            {/* edit the description row */}
+                            <Table.Cell>
+                                {editing ? {/* function that happens when the edit button is selected */} : <span>{task.description}</span>}
+                            </Table.Cell>
                             <Table.Cell>
                                 <Flex gap="2">
-                                    <Button className='w-1/2'>
+                                    <Button 
+                                      className='w-1/2'>
+                                      onClick={()=> 
+                                        num = {task.id}
+                                        }>
                                         Edit
                                     </Button>
                                     <Button className='w-1/2' color="red">
