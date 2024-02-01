@@ -4,6 +4,8 @@ interface Props {
     params: {field: string}
 }
 
+
+// successfully updates task
 const EditTask = async (idToEdit: number, newValue: any) => {
     try {
         const result = await prisma.task.update({
