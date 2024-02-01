@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, ChangeEventHandler } from 'react'
 import { Button, Table, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
 import prisma from '@/prisma/client';
 import EditTask from './editTask';
+import axios from 'axios';
 
 const EditPage = async ({editing}:{editing: boolean}) => {
     
@@ -10,15 +11,64 @@ const EditPage = async ({editing}:{editing: boolean}) => {
     // tasks is a variable that contains all the data in the table. See note below for tasks.map
     const tasks = await prisma.task.findMany()
 
-    // const InputField = ({value, handleChange}:{value:number, handleChange: (e: React.ChangeEvent<HTMLInputElement>)}
-    //     return (
-    //         <input
-    //         onChange={handleChange}
-    //         defaultValue={value}
-    //         >
-    //         </input>
-    //     )
-    // )
+    async function handleDelete() {
+        console.log("pressed")
+    }
+
+    const data = {
+                id: 5,
+                title : "test 4",
+                description : "pls work as a patch",
+                status : "IN_PROGRESS",
+                due : "2024-02-25 07:32:17.743",
+                createdAt : Date.now(),
+                updatedAt : Date.now()
+            }
+
+    var idToDelete = 5
+
+    axios.delete(`/api/tasks',${idToDelete}`)
+      .then(response => {
+        console.log(`Deleted post with ID ${idToDelete}`);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    var value = "string"
+
+    const EditField = ({value, fieldType, handleChange}:{value : any, fieldType : any, handleChange : ChangeEventHandler<HTMLInputElement>}) => {
+        return (
+            <input
+              id="status"
+              type = {fieldType}
+              onChange={handleChange}
+              defaultValue={value}>
+            </input>
+        )
+    }
+
+    const handleChange = (event:any) => {
+        data.status = event;
+        console.log(data)
+    }
+
+    // function handleEdit(data) => {
+    //     axios.patch('/api/tasks', data)
+    //     .then((response) => {
+    //         console.log(response.data);
+    //     })
+    //     .catch((error) => {
+    //         console.error(error);
+    //     });}
+
+      // this works to delete
+    // var idToDelete = 5
+    // const deleteTask = await prisma.task.delete({
+    //     where: {
+    //     id: idToDelete,
+    //     },
+    // })
 
     const updateTaskResult = await EditTask(5, "OPEN")
     console.log(JSON.stringify(updateTaskResult, null, 5))
@@ -36,6 +86,7 @@ const EditPage = async ({editing}:{editing: boolean}) => {
     //     }
     // }
 
+    // <input defaultValue={task.status}></input>
 
     return (
         <Table.Body>
@@ -47,7 +98,7 @@ const EditPage = async ({editing}:{editing: boolean}) => {
                     </Table.RowHeaderCell>
                     {/* edit the status row */}
                     <Table.Cell>
-                        {editing ? <input defaultValue={task.status}></input> : <span>{task.status}</span>}
+                        {editing ? <EditField value={task.status} fieldType="string" handleChange={handleChange}/> : <span>{task.status}</span>}
                     </Table.Cell>
                     {/* edit the title row */}
                     <Table.Cell>
@@ -62,12 +113,12 @@ const EditPage = async ({editing}:{editing: boolean}) => {
                             <Button 
                             className='w-1/2'>
                             {/* onClick={() => handleEdit()}> */}
-                                Edit
+                                {editing ? "Save" : "Edit" }
                             </Button>
                             <Button 
                             className='w-1/2' 
-                            color="red">
-                            {/* onClick={() => {}}> */}
+                            color="red"
+                            onClick={() => handleDelete()}>
                                 Delete
                             </Button>
                         </Flex>

@@ -23,14 +23,6 @@ const TasksPage = () => {
     // const updateTaskResult = await EditTask(5, "OPEN")
     // console.log(JSON.stringify(updateTaskResult, null, 5))
 
-    // async function handleDelete(idToDelete: number) {
-    //     const deleteTask = await prisma.task.delete({
-    //             where: {
-    //             id: idToDelete,
-    //             },
-    //         })
-    //     console.log("delete button pushed")
-    // }
 
     // const deleteTask = await prisma.task.delete({
     //     where: {
@@ -38,7 +30,7 @@ const TasksPage = () => {
     //     },
     //   })
 
-    const [isediting, setEditing] = useState(false);
+    const [isediting, setIsEditing] = useState(true);
     // console.log(editing)
     // var isediting = false
 
@@ -50,8 +42,7 @@ const TasksPage = () => {
             </div>
             <div>
                 <Button
-                
-                  onClickCapture={()=>setEditing(true)}>
+                  onClick={()=>setIsEditing(true)}>
                     {isediting ? "Save" : "Edit" }
                   </Button>
             </div>
