@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 /* currently getting circular errors. If I don't have "use client", I get the following error
         "You're importing a component that needs useState. It only works in a Client Component, 
         but none of its parents are marked with "use client", so they're Server Components by default."
@@ -11,6 +11,7 @@ import React, { useState } from 'react'
 import { Button, Table, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
 import prisma from '@/prisma/client';
+import EditTask from './editTask';
 
 const TasksPage = async() => {
     
@@ -18,8 +19,28 @@ const TasksPage = async() => {
     // tasks is a variable that contains all the data in the table. See note below for tasks.map
     const tasks = await prisma.task.findMany()
 
-    const [editing, setEditing] = useState(false);
-    console.log(editing)
+    // const updateTaskResult = await EditTask(5, "IN_PROGRESS")
+    // console.log(JSON.stringify(updateTaskResult, null, 5))
+
+    // async function handleDelete(idToDelete: number) {
+    //     const deleteTask = await prisma.task.delete({
+    //             where: {
+    //             id: idToDelete,
+    //             },
+    //         })
+    //     console.log("delete button pushed")
+    // }
+
+    // const deleteTask = await prisma.task.delete({
+    //     where: {
+    //       id: 2,
+    //     },
+    //   })
+
+    // const [editing, setEditing] = useState(false);
+    // console.log(editing)
+    var editing = false
+
 
     return (
         <>
@@ -58,16 +79,19 @@ const TasksPage = async() => {
                             </Table.Cell>
                             {/* edit the description row */}
                             <Table.Cell>
-                                {editing ? <input defaultValue={task.description}></input> : <span>{task.description}</span>}
+                                {editing ? <input defaultValue={task.description}></input> : <span>{task.id}</span>}
                             </Table.Cell>
                             <Table.Cell>
                                 <Flex gap="2">
                                     <Button 
-                                      className='w-1/2'
-                                      onClick={() => setEditing(true)}>
+                                      className='w-1/2'>
+                                      {/* onClick={() => handleEdit()}> */}
                                         Edit
                                     </Button>
-                                    <Button className='w-1/2' color="red">
+                                    <Button 
+                                      className='w-1/2' 
+                                      color="red">
+                                      {/* onClick={() => {}}> */}
                                         Delete
                                     </Button>
                                 </Flex>
