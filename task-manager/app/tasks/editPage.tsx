@@ -5,25 +5,24 @@ import prisma from '@/prisma/client';
 import EditTask from './editTask';
 import axios from 'axios';
 
-const EditPage = async ({editing}:{editing: boolean}) => {
+const EditPage = async ({editing, setEditing}:{editing: boolean, setEditing: any}) => {
     
     // had to look at prisma documentation to get this "findMany()." Refer there for other features
     // tasks is a variable that contains all the data in the table. See note below for tasks.map
-    const tasks = await prisma.task.findMany()
-
-    async function handleDelete() {
-        console.log("pressed")
-    }
-
-    const data = {
-                id: 5,
-                title : "test 4",
-                description : "pls work as a patch",
-                status : "IN_PROGRESS",
-                due : "2024-02-25 07:32:17.743",
-                createdAt : Date.now(),
-                updatedAt : Date.now()
-            }
+    const tasks = await axios.get('/api/route')
+                    .then(function(response) {
+                        console.log(response);
+                    });
+/*
+    // const data = {
+    //             id: 5,
+    //             title : "test 4",
+    //             description : "pls work as a patch",
+    //             status : "IN_PROGRESS",
+    //             due : "2024-02-25 07:32:17.743",
+    //             createdAt : Date.now(),
+    //             updatedAt : Date.now()
+    //         }
 
     var idToDelete = 5
 
@@ -47,12 +46,38 @@ const EditPage = async ({editing}:{editing: boolean}) => {
             </input>
         )
     }
-
+/*
     const handleChange = (event:any) => {
         data.status = event;
         console.log(data)
     }
 
+
+
+    function handleEdit() {
+        if (editing) {
+            const data = {
+                id,
+                title,
+                description,
+                status,
+                due,
+                createdAt,
+                updatedAt
+            }
+            console.log(data, task.id)
+            axios.patch(
+                `/api/tasks/${task.id}`, data
+            )
+                .then(
+                    response => console.log(response.data)
+                )
+                .catch((error) => console.error("There was an error updating the round:", error));
+        }
+
+        setEditing(!editing)
+    }
+    */
     // function handleEdit(data) => {
     //     axios.patch('/api/tasks', data)
     //     .then((response) => {
@@ -63,12 +88,13 @@ const EditPage = async ({editing}:{editing: boolean}) => {
     //     });}
 
       // this works to delete
-    // var idToDelete = 5
-    // const deleteTask = await prisma.task.delete({
-    //     where: {
-    //     id: idToDelete,
-    //     },
-    // })
+    var idToDelete = 5
+    const handleDelete = async(taskID: number) => {
+        const deleteTask = await prisma.task.delete({
+            where: {
+            id: taskID,
+            },
+        })}
 
     const updateTaskResult = await EditTask(5, "OPEN")
     console.log(JSON.stringify(updateTaskResult, null, 5))
@@ -86,7 +112,7 @@ const EditPage = async ({editing}:{editing: boolean}) => {
     //     }
     // }
 
-    // <input defaultValue={task.status}></input>
+    //  <EditField value={task.status} fieldType="string" handleChange={handleChange}/>
 
     return (
         <Table.Body>
@@ -98,7 +124,7 @@ const EditPage = async ({editing}:{editing: boolean}) => {
                     </Table.RowHeaderCell>
                     {/* edit the status row */}
                     <Table.Cell>
-                        {editing ? <EditField value={task.status} fieldType="string" handleChange={handleChange}/> : <span>{task.status}</span>}
+                        {editing ? <input defaultValue={task.status}></input> : <span>{task.status}</span>}
                     </Table.Cell>
                     {/* edit the title row */}
                     <Table.Cell>
@@ -118,7 +144,7 @@ const EditPage = async ({editing}:{editing: boolean}) => {
                             <Button 
                             className='w-1/2' 
                             color="red"
-                            onClick={() => handleDelete()}>
+                            onClick={() => handleDelete(task.id)}>
                                 Delete
                             </Button>
                         </Flex>
@@ -199,5 +225,6 @@ const EditPage = async ({editing}:{editing: boolean}) => {
 //         </>
 //     )
 // }
+
 
 export default EditPage

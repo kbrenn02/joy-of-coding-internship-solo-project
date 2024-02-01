@@ -30,7 +30,7 @@ const TasksPage = () => {
     //     },
     //   })
 
-    const [isediting, setIsEditing] = useState(true);
+    const [isediting, setIsEditing] = useState(false);
     // console.log(editing)
     // var isediting = false
 
@@ -62,7 +62,7 @@ const TasksPage = () => {
                 with that specific header. This function has an issue showing date types, so task.due.toDateString() 
                 is needed to turn the date type to a string type*/}
                 
-                <EditPage editing={isediting}/>
+                <EditPage editing={isediting} setEditing={setIsEditing}/>
                 
             </Table.Root>
 

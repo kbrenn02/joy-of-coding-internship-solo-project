@@ -27,3 +27,14 @@ export async function POST(request: NextRequest) {
     If the request is valid, the server sends a response. In this case, the response is adding the newTask to the database and gives a success message
     Request: Client to Server, Response: Server to client
 */
+
+export async function GET(response: NextResponse) {
+//     const body = await response.json();
+//     const validation = createTaskSchema.safeParse(body); // see point 1 below
+//     if (!validation.success)
+//         return NextResponse.json(validation.error.errors, { status: 400 })
+
+    const tasks = await prisma.task.findMany()
+
+    return NextResponse.json(tasks, { status: 201 })
+}
