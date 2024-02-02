@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 /* currently getting circular errors. If I don't have "use client", I get the following error
         "You're importing a component that needs useState. It only works in a Client Component, 
         but none of its parents are marked with "use client", so they're Server Components by default."
@@ -30,9 +30,9 @@ const TasksPage = () => {
     //     },
     //   })
 
-    const [isediting, setIsEditing] = useState(false);
+    // const [isediting, setIsEditing] = useState(false);
     // console.log(editing)
-    // var isediting = false
+    var isediting = true
 
 
     return (
@@ -41,8 +41,7 @@ const TasksPage = () => {
                 <Button><Link href='/tasks/new'>New Task</Link></Button>
             </div>
             <div>
-                <Button
-                  onClick={()=>setIsEditing(true)}>
+                <Button>
                     {isediting ? "Save" : "Edit" }
                   </Button>
             </div>
@@ -62,10 +61,10 @@ const TasksPage = () => {
                 with that specific header. This function has an issue showing date types, so task.due.toDateString() 
                 is needed to turn the date type to a string type*/}
                 
-                <EditPage editing={isediting} setEditing={setIsEditing}/>
+                
                 
             </Table.Root>
-
+<EditPage editing={isediting}/>
         </>
     )
 }

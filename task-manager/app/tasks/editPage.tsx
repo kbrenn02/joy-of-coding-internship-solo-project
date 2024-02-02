@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, ChangeEventHandler } from 'react'
 import { Button, Table, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
@@ -5,14 +7,25 @@ import prisma from '@/prisma/client';
 import EditTask from './editTask';
 import axios from 'axios';
 
-const EditPage = async ({editing, setEditing}:{editing: boolean, setEditing: any}) => {
+const EditPage = async ({editing}:{editing: boolean}) => {
     
     // had to look at prisma documentation to get this "findMany()." Refer there for other features
     // tasks is a variable that contains all the data in the table. See note below for tasks.map
-    const tasks = await axios.get('/api/route')
+ // this works to print the results in the console but I can't use it   
+    // useEffect(() => {
+    //     axios.get('/api/tasks')
+    //     .then(function(response) {
+    //         console.log(response);
+    //     })}, []);
+    const jsonTasks = await axios.get('/api/tasks')
                     .then(function(response) {
-                        console.log(response);
-                    });
+                        console.log(response)
+                    })
+    console.log("break between creation and purposeful printing")
+    // {data: Array(4), status: 201, statusText: 'Created', headers: AxiosHeaders, config: 
+    // this is the result from the get request. I need to figure out how to access the data in the array
+
+    // console.log(tasks)
 /*
     // const data = {
     //             id: 5,
@@ -114,44 +127,47 @@ const EditPage = async ({editing, setEditing}:{editing: boolean, setEditing: any
 
     //  <EditField value={task.status} fieldType="string" handleChange={handleChange}/>
 
-    return (
-        <Table.Body>
-            {tasks.map((task) =>
-                <Table.Row>
-                    {/* edit the due date row */}
-                    <Table.RowHeaderCell>
-                        {editing ? <input defaultValue={task.due.toDateString()}></input> : <span>{task.due.toDateString()}</span>}
-                    </Table.RowHeaderCell>
-                    {/* edit the status row */}
-                    <Table.Cell>
-                        {editing ? <input defaultValue={task.status}></input> : <span>{task.status}</span>}
-                    </Table.Cell>
-                    {/* edit the title row */}
-                    <Table.Cell>
-                        {editing ? <input defaultValue={task.title}></input> : <span>{task.title}</span>}
-                    </Table.Cell>
-                    {/* edit the description row */}
-                    <Table.Cell>
-                        {editing ? <input className='bg-slate-200 p-1' defaultValue={task.description}></input> : <span>{task.description}</span>}
-                    </Table.Cell>
-                    <Table.Cell>
-                        <Flex gap="2">
-                            <Button 
-                            className='w-1/2'>
-                            {/* onClick={() => handleEdit()}> */}
-                                {editing ? "Save" : "Edit" }
-                            </Button>
-                            <Button 
-                            className='w-1/2' 
-                            color="red"
-                            onClick={() => handleDelete(task.id)}>
-                                Delete
-                            </Button>
-                        </Flex>
-                    </Table.Cell>
-                </Table.Row>
-                )}
-        </Table.Body>
+    // return (
+    //     <Table.Body>
+    //         {tasks.map((task) =>
+    //             <Table.Row>
+    //                 {/* edit the due date row */}
+    //                 <Table.RowHeaderCell>
+    //                     {editing ? <input defaultValue={task.due.toDateString()}></input> : <span>{task.due.toDateString()}</span>}
+    //                 </Table.RowHeaderCell>
+    //                 {/* edit the status row */}
+    //                 <Table.Cell>
+    //                     {editing ? <input defaultValue={task.status}></input> : <span>{task.status}</span>}
+    //                 </Table.Cell>
+    //                 {/* edit the title row */}
+    //                 <Table.Cell>
+    //                     {editing ? <input defaultValue={task.title}></input> : <span>{task.title}</span>}
+    //                 </Table.Cell>
+    //                 {/* edit the description row */}
+    //                 <Table.Cell>
+    //                     {editing ? <input className='bg-slate-200 p-1' defaultValue={task.description}></input> : <span>{task.description}</span>}
+    //                 </Table.Cell>
+    //                 <Table.Cell>
+    //                     <Flex gap="2">
+    //                         <Button 
+    //                         className='w-1/2'>
+    //                         {/* onClick={() => handleEdit()}> */}
+    //                             {editing ? "Save" : "Edit" }
+    //                         </Button>
+    //                         <Button 
+    //                         className='w-1/2' 
+    //                         color="red"
+    //                         onClick={() => handleDelete(task.id)}>
+    //                             Delete
+    //                         </Button>
+    //                     </Flex>
+    //                 </Table.Cell>
+    //             </Table.Row>
+    //             )}
+    //     </Table.Body>
+    // )
+    return(
+        <div>Potato</div>
     )
         }
 
