@@ -10,7 +10,11 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(validation.error.errors, { status: 400 })
 
     const newTask = await prisma.task.create({
-        data: {title: body.title, description: body.description, due: body.due}
+        data: {
+            title: body.title, 
+            description: body.description, 
+            due: body.due
+        }
     })
 
     return NextResponse.json(newTask, { status: 201 })
@@ -28,13 +32,10 @@ export async function POST(request: NextRequest) {
     Request: Client to Server, Response: Server to client
 */
 
-export async function GET(response: NextResponse) {
-//     const body = await response.json();
-//     const validation = createTaskSchema.safeParse(body); // see point 1 below
-//     if (!validation.success)
-//         return NextResponse.json(validation.error.errors, { status: 400 })
+export async function GET(request: NextRequest) {
 
     const tasks = await prisma.task.findMany()
 
     return NextResponse.json(tasks, { status: 201 })
 }
+
