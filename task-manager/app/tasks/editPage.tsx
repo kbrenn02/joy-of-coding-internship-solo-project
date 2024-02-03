@@ -4,7 +4,6 @@ import React, { useState, useEffect, ChangeEventHandler } from 'react'
 import { Button, Table, Flex, TableBody } from '@radix-ui/themes';
 import Link from 'next/link';
 import prisma from '@/prisma/client';
-import EditTask from './editTask';
 import axios from 'axios';
 import { EnumValues, object } from 'zod';
 
@@ -17,13 +16,8 @@ const EditPage = () => {
         due: Date;
         status: EnumValues;
     }
-
-    // had to look at prisma documentation to get this "findMany()." Refer there for other features
-    // tasks is a variable that contains all the data in the table. See note below for tasks.map
- // this works to print the results in the console but I can't use it   
+ 
     const [tasks, setTasks] = useState<TaskForm[]>([])
-    const [newTask, setNewTask] = useState('');
-    const [editIndex, setEditIndex] = useState<number | null>(null);
     const [isediting, setIsEditing] = useState(false);
 
     //this works to show the data in the table (but it's unstructured)
@@ -47,21 +41,21 @@ const EditPage = () => {
 		}
 	};
 
-    const updateTask = async (index: number) => {
-		if (isediting) {
-            const data = {
-                title,
-                description,
-                due,
-                status
-            }
-            axios.patch(`/api/tasks/${tasks[index].id}`, data).then(response => console.log("success"))
-            .catch((error) => console.error("There was an error updating the task", error)
-            )
-        }
+    // const updateTask = async (index: number) => {
+	// 	if (isediting) {
+    //         const data = {
+    //             title,
+    //             description,
+    //             due,
+    //             status
+    //         }
+    //         axios.patch(`/api/tasks/${tasks[index].id}`, data).then(response => console.log("success"))
+    //         .catch((error) => console.error("There was an error updating the task", error)
+    //         )
+    //     }
         
-        setIsEditing(!isediting)
-    };
+    //     setIsEditing(!isediting)
+    // };
 
     const EditField = ({value, fieldType, handleChange}:{value : any, fieldType : any, handleChange : ChangeEventHandler<HTMLInputElement>}) => {
         return (
@@ -73,15 +67,15 @@ const EditPage = () => {
             </input>
         )
     }
+
 /*
     const handleChange = (event:any) => {
         data.status = event;
         console.log(data)
     }
-
-
     //  <EditField value={task.status} fieldType="string" handleChange={handleChange}/>
 */
+
     return (
         <Table.Body>
             {tasks.map((task, index) => (
@@ -91,7 +85,7 @@ const EditPage = () => {
                     </Table.RowHeaderCell>
                     <Table.Cell>
                         {task.status}
-                        {index}
+                        {index} {/* Will need to remove this */}
                     </Table.Cell>
                     <Table.Cell>
                         {task.title}
@@ -102,9 +96,9 @@ const EditPage = () => {
                     <Table.Cell>
                         <Flex gap="2">
                                 <Button 
-                                className='w-1/2'
-                                onClick={() => updateTask(index)}>
-                                    Edit
+                                className='w-1/2'>
+                                {/* onClick={() => updateTask(index)}> */}
+                                    { isediting ? "Save" : "Edit"}
                                 </Button>
                                 <Button 
                                 className='w-1/2' 

@@ -7,11 +7,10 @@
         is often caused by accidentally adding `'use client'` to a module that was originally written for the server."
 */
 
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Button, Table, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
 import prisma from '@/prisma/client';
-import EditTask from './editTask';
 import EditPage from './editPage';
 
 const TasksPage = () => {
