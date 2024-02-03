@@ -74,20 +74,20 @@ export async function PATCH(request: NextRequest, {params} : { params : {id : st
 }
 
 
-// export async function DELETE(request: NextRequest, {params}:{params: {id:string}}) {
-//     // fetch task from db
-//     const task = await prisma.task.findUnique({
-//         where: { id : parseInt(params.id)}
-//     })
+export async function DELETE(request: NextRequest, {params}:{params: {id:string}}) {
+    // fetch task from db
+    const task = await prisma.task.findUnique({
+        where: { id : parseInt(params.id)}
+    })
 
-//     // error if round not found
-//     if(!task)
-//         return NextResponse.json({ error : "Task not found" }, { status : 404})
+    // error if round not found
+    if(!task)
+        return NextResponse.json({ error : "Task not found" }, { status : 404})
 
-//     // delete the user
-//     const deleteTask = await prisma.task.delete({
-//         where: {id: task.id}
-//     })
+    // delete the user
+    const deleteTask = await prisma.task.delete({
+        where: {id: task.id}
+    })
 
-//     return NextResponse.json({})
-// }
+    return NextResponse.json({})
+}

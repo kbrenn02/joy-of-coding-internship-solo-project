@@ -33,7 +33,7 @@ const EditPage = () => {
     const removeTask = async (index: number) => {
 		try {
 			await axios.delete(`/api/tasks/${tasks[index].id}`);
-			const newTasks = [...tasks];
+			const newTasks = tasks;
 			newTasks.splice(index, 1);
 			setTasks(newTasks);
 		} catch (error) {
@@ -57,16 +57,17 @@ const EditPage = () => {
     //     setIsEditing(!isediting)
     // };
 
-    const EditField = ({value, fieldType, handleChange}:{value : any, fieldType : any, handleChange : ChangeEventHandler<HTMLInputElement>}) => {
-        return (
-            <input
-              id="status"
-              type = {fieldType}
-              onChange={handleChange}
-              defaultValue={value}>
-            </input>
-        )
-    }
+//Edit Field function to handle edits
+    // const EditField = ({value, fieldType, handleChange}:{value : any, fieldType : any, handleChange : (e: React.ChangeEventHandler<HTMLInputElement>)}) => {
+    //     return (
+    //         <input
+    //           id="status"
+    //           type = {fieldType}
+    //           onChange={() => handleChange}
+    //           defaultValue={value}>
+    //         </input>
+    //     )
+    // }
 
 /*
     const handleChange = (event:any) => {
