@@ -11,6 +11,7 @@ import { EnumValues, object } from 'zod';
 const EditPage = ({editing}:{editing: boolean}) => {
     
     interface TaskForm {
+        id: number;
         title: string;
         description: string;
         due: Date;
@@ -21,8 +22,10 @@ const EditPage = ({editing}:{editing: boolean}) => {
     // tasks is a variable that contains all the data in the table. See note below for tasks.map
  // this works to print the results in the console but I can't use it   
     const [tasks, setTasks] = useState<TaskForm[]>([])
+    const [newTask, setNewTask] = useState('');
     const [editIndex, setEditIndex] = useState<number | null>(null);
 
+    //this works to show the data in the table (but it's unstructured)
     useEffect(() => {
         axios.get('/api/tasks').then(function(response) {
             setTasks(response.data);
@@ -30,6 +33,17 @@ const EditPage = ({editing}:{editing: boolean}) => {
     }, []);
 
     const currentDate = new Date();
+
+    const removeTask = async (index: number) => {
+		try {
+			await axios.delete(`/api/tasks/${tasks[index].id}`);
+			const newTasks = [...tasks];
+			newTasks.splice(index, 1);
+			setTasks(newTasks);
+		} catch (error) {
+			console.error('Error deleting task:', error);
+		}
+	};
 /*
     // const data = {
     //             id: 5,
@@ -194,7 +208,8 @@ const EditPage = ({editing}:{editing: boolean}) => {
                                 </Button>
                                 <Button 
                                 className='w-1/2' 
-                                color="red">
+                                color="red"
+                                onClick={() => removeTask(index)}>
                                     Delete
                                 </Button>
                            </Flex>
