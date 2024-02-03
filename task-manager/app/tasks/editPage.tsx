@@ -8,7 +8,7 @@ import EditTask from './editTask';
 import axios from 'axios';
 import { EnumValues, object } from 'zod';
 
-const EditPage = ({editing}:{editing: boolean}) => {
+const EditPage = () => {
     
     interface TaskForm {
         id: number;
@@ -24,15 +24,17 @@ const EditPage = ({editing}:{editing: boolean}) => {
     const [tasks, setTasks] = useState<TaskForm[]>([])
     const [newTask, setNewTask] = useState('');
     const [editIndex, setEditIndex] = useState<number | null>(null);
+    const [isediting, setIsEditing] = useState(false);
 
     //this works to show the data in the table (but it's unstructured)
     useEffect(() => {
-        axios.get('/api/tasks').then(function(response) {
+        axios.get(`/api/tasks`).then(function(response) {
             setTasks(response.data);
         });
     }, []);
 
     const currentDate = new Date();
+    console.log(tasks[0])
 
     const removeTask = async (index: number) => {
 		try {
@@ -41,10 +43,26 @@ const EditPage = ({editing}:{editing: boolean}) => {
 			newTasks.splice(index, 1);
 			setTasks(newTasks);
 		} catch (error) {
-			console.error('Error deleting task:', error);
+			console.error('did not work:', error);
 		}
 	};
-/*
+
+    const updateTask = async (index: number) => {
+		if (isediting) {
+            const data = {
+                title,
+                description,
+                due,
+                status
+            }
+            axios.patch(`/api/tasks/${tasks[index].id}`, data).then(response => console.log("success"))
+            .catch((error) => console.error("There was an error updating the task", error)
+            )
+        }
+        
+        setIsEditing(!isediting)
+    };
+
     // const data = {
     //             id: 5,
     //             title : "test 4",
@@ -165,26 +183,11 @@ const EditPage = ({editing}:{editing: boolean}) => {
     //                 <Table.Cell>
     //                     {editing ? <input className='bg-slate-200 p-1' defaultValue={task.description}></input> : <span>{task.description}</span>}
     //                 </Table.Cell>
-    //                 <Table.Cell>
-    //                     <Flex gap="2">
-    //                         <Button 
-    //                         className='w-1/2'>
-    //                         {/* onClick={() => handleEdit()}> */}
-    //                             {editing ? "Save" : "Edit" }
-    //                         </Button>
-    //                         <Button 
-    //                         className='w-1/2' 
-    //                         color="red"
-    //                         onClick={() => handleDelete(task.id)}>
-    //                             Delete
-    //                         </Button>
-    //                     </Flex>
-    //                 </Table.Cell>
     //             </Table.Row>
     //             )}
     //     </Table.Body>
     // )
-    return(
+    return (
         <Table.Body>
             {tasks.map((task, index) => (
                 <Table.Row key={index}>
@@ -193,6 +196,7 @@ const EditPage = ({editing}:{editing: boolean}) => {
                     </Table.RowHeaderCell>
                     <Table.Cell>
                         {task.status}
+                        {index}
                     </Table.Cell>
                     <Table.Cell>
                         {task.title}
@@ -203,7 +207,8 @@ const EditPage = ({editing}:{editing: boolean}) => {
                     <Table.Cell>
                         <Flex gap="2">
                                 <Button 
-                                className='w-1/2'>
+                                className='w-1/2'
+                                onClick={() => updateTask(index)}>
                                     Edit
                                 </Button>
                                 <Button 

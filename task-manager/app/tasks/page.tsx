@@ -32,18 +32,13 @@ const TasksPage = () => {
 
     // const [isediting, setIsEditing] = useState(false);
     // console.log(editing)
-    var isediting = true
+    // var isediting = true
 
 
     return (
         <>
             <div className='ml-4'>
                 <Button><Link href='/tasks/new'>New Task</Link></Button>
-            </div>
-            <div>
-                <Button>
-                    {isediting ? "Save" : "Edit" }
-                  </Button>
             </div>
 
             <Table.Root className='mt-4'>
@@ -64,7 +59,7 @@ const TasksPage = () => {
                 
                 
             </Table.Root>
-<EditPage editing={isediting}/>
+            <EditPage />
         </>
     )
 }
