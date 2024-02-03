@@ -6,22 +6,34 @@ import Link from 'next/link';
 import prisma from '@/prisma/client';
 import EditTask from './editTask';
 import axios from 'axios';
+import { object } from 'zod';
 
-const EditPage = async ({editing}:{editing: boolean}) => {
+const EditPage = ({editing}:{editing: boolean}) => {
     
     // had to look at prisma documentation to get this "findMany()." Refer there for other features
     // tasks is a variable that contains all the data in the table. See note below for tasks.map
  // this works to print the results in the console but I can't use it   
-    // useEffect(() => {
-    //     axios.get('/api/tasks')
-    //     .then(function(response) {
-    //         console.log(response);
-    //     })}, []);
-    const jsonTasks = await axios.get('/api/tasks')
+    const [tasks, setTasks] = useState()
+    useEffect(() => {
+        axios.get('/api/tasks')
+        .then(function(response) {
+            console.log(response);
+        })
+        setTasks(tasks)}, []);
+    const sss = axios.get('/api/tasks')
                     .then(function(response) {
                         console.log(response)
+                        console.log(typeof(response))
                     })
     console.log("break between creation and purposeful printing")
+    console.log(tasks)
+    
+    // const obj = JSON.stringify(tasks)
+    console.log('separate')
+    // console.log(obj)
+    // const pars = JSON.parse(obj)
+    // console.log(pars.id)
+
     // {data: Array(4), status: 201, statusText: 'Created', headers: AxiosHeaders, config: 
     // this is the result from the get request. I need to figure out how to access the data in the array
 
@@ -101,16 +113,16 @@ const EditPage = async ({editing}:{editing: boolean}) => {
     //     });}
 
       // this works to delete
-    var idToDelete = 5
-    const handleDelete = async(taskID: number) => {
-        const deleteTask = await prisma.task.delete({
-            where: {
-            id: taskID,
-            },
-        })}
+    // var idToDelete = 5
+    // const handleDelete = async(taskID: number) => {
+    //     const deleteTask = await prisma.task.delete({
+    //         where: {
+    //         id: taskID,
+    //         },
+    //     })}
 
-    const updateTaskResult = await EditTask(5, "OPEN")
-    console.log(JSON.stringify(updateTaskResult, null, 5))
+    // const updateTaskResult = await EditTask(5, "OPEN")
+    // console.log(JSON.stringify(updateTaskResult, null, 5))
 
 
     // function handleEdit() {
