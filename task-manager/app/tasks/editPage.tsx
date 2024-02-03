@@ -1,43 +1,33 @@
 'use client';
 
 import React, { useState, useEffect, ChangeEventHandler } from 'react'
-import { Button, Table, Flex } from '@radix-ui/themes';
+import { Button, Table, Flex, TableBody } from '@radix-ui/themes';
 import Link from 'next/link';
 import prisma from '@/prisma/client';
 import EditTask from './editTask';
 import axios from 'axios';
-import { object } from 'zod';
+import { EnumValues, object } from 'zod';
 
 const EditPage = ({editing}:{editing: boolean}) => {
     
+    interface TaskForm {
+        title: string;
+        description: string;
+        due: Date;
+        status: EnumValues;
+    }
+
     // had to look at prisma documentation to get this "findMany()." Refer there for other features
     // tasks is a variable that contains all the data in the table. See note below for tasks.map
  // this works to print the results in the console but I can't use it   
-    const [tasks, setTasks] = useState()
+    const [tasks, setTasks] = useState<TaskForm[]>([])
+    const [editIndex, setEditIndex] = useState<number | null>(null);
+
     useEffect(() => {
-        axios.get('/api/tasks')
-        .then(function(response) {
-            console.log(response);
-        })
-        setTasks(tasks)}, []);
-    const sss = axios.get('/api/tasks')
-                    .then(function(response) {
-                        console.log(response)
-                        console.log(typeof(response))
-                    })
-    console.log("break between creation and purposeful printing")
-    console.log(tasks)
-    
-    // const obj = JSON.stringify(tasks)
-    console.log('separate')
-    // console.log(obj)
-    // const pars = JSON.parse(obj)
-    // console.log(pars.id)
-
-    // {data: Array(4), status: 201, statusText: 'Created', headers: AxiosHeaders, config: 
-    // this is the result from the get request. I need to figure out how to access the data in the array
-
-    // console.log(tasks)
+        axios.get('/api/tasks').then(function(response) {
+            setTasks(response.data);
+        });
+    }, []);
 /*
     // const data = {
     //             id: 5,
@@ -179,7 +169,37 @@ const EditPage = ({editing}:{editing: boolean}) => {
     //     </Table.Body>
     // )
     return(
-        <div>Potato</div>
+        <Table.Body>
+            {tasks.map((task, index) => (
+                <Table.Row key={index}>
+                    <Table.RowHeaderCell>
+                        {task.due.toDateString()}
+                    </Table.RowHeaderCell>
+                    <Table.Cell>
+                        {task.status}
+                    </Table.Cell>
+                    <Table.Cell>
+                        {task.title}
+                    </Table.Cell>
+                    <Table.Cell>
+                        {task.description}
+                    </Table.Cell>
+                    <Table.Cell>
+                        <Flex gap="2">
+                                <Button 
+                                className='w-1/2'>
+                                    Edit
+                                </Button>
+                                <Button 
+                                className='w-1/2' 
+                                color="red">
+                                    Delete
+                                </Button>
+                           </Flex>
+                       </Table.Cell>
+                </Table.Row>
+            ))}
+        </Table.Body>
     )
         }
 
