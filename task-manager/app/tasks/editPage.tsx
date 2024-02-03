@@ -63,28 +63,6 @@ const EditPage = () => {
         setIsEditing(!isediting)
     };
 
-    // const data = {
-    //             id: 5,
-    //             title : "test 4",
-    //             description : "pls work as a patch",
-    //             status : "IN_PROGRESS",
-    //             due : "2024-02-25 07:32:17.743",
-    //             createdAt : Date.now(),
-    //             updatedAt : Date.now()
-    //         }
-
-    var idToDelete = 5
-
-    axios.delete(`/api/tasks',${idToDelete}`)
-      .then(response => {
-        console.log(`Deleted post with ID ${idToDelete}`);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
-    var value = "string"
-
     const EditField = ({value, fieldType, handleChange}:{value : any, fieldType : any, handleChange : ChangeEventHandler<HTMLInputElement>}) => {
         return (
             <input
@@ -102,91 +80,8 @@ const EditPage = () => {
     }
 
 
-
-    function handleEdit() {
-        if (editing) {
-            const data = {
-                id,
-                title,
-                description,
-                status,
-                due,
-                createdAt,
-                updatedAt
-            }
-            console.log(data, task.id)
-            axios.patch(
-                `/api/tasks/${task.id}`, data
-            )
-                .then(
-                    response => console.log(response.data)
-                )
-                .catch((error) => console.error("There was an error updating the round:", error));
-        }
-
-        setEditing(!editing)
-    }
-    */
-    // function handleEdit(data) => {
-    //     axios.patch('/api/tasks', data)
-    //     .then((response) => {
-    //         console.log(response.data);
-    //     })
-    //     .catch((error) => {
-    //         console.error(error);
-    //     });}
-
-      // this works to delete
-    // var idToDelete = 5
-    // const handleDelete = async(taskID: number) => {
-    //     const deleteTask = await prisma.task.delete({
-    //         where: {
-    //         id: taskID,
-    //         },
-    //     })}
-
-    // const updateTaskResult = await EditTask(5, "OPEN")
-    // console.log(JSON.stringify(updateTaskResult, null, 5))
-
-
-    // function handleEdit() {
-    //     const data = {
-    //         id,
-    //         title,
-    //         description,
-    //         status,
-    //         due,
-    //         createdAt,
-    //         updatedAt
-    //     }
-    // }
-
     //  <EditField value={task.status} fieldType="string" handleChange={handleChange}/>
-
-    // return (
-    //     <Table.Body>
-    //         {tasks.map((task) =>
-    //             <Table.Row>
-    //                 {/* edit the due date row */}
-    //                 <Table.RowHeaderCell>
-    //                     {editing ? <input defaultValue={task.due.toDateString()}></input> : <span>{task.due.toDateString()}</span>}
-    //                 </Table.RowHeaderCell>
-    //                 {/* edit the status row */}
-    //                 <Table.Cell>
-    //                     {editing ? <input defaultValue={task.status}></input> : <span>{task.status}</span>}
-    //                 </Table.Cell>
-    //                 {/* edit the title row */}
-    //                 <Table.Cell>
-    //                     {editing ? <input defaultValue={task.title}></input> : <span>{task.title}</span>}
-    //                 </Table.Cell>
-    //                 {/* edit the description row */}
-    //                 <Table.Cell>
-    //                     {editing ? <input className='bg-slate-200 p-1' defaultValue={task.description}></input> : <span>{task.description}</span>}
-    //                 </Table.Cell>
-    //             </Table.Row>
-    //             )}
-    //     </Table.Body>
-    // )
+*/
     return (
         <Table.Body>
             {tasks.map((task, index) => (
