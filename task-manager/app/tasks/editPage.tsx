@@ -28,6 +28,8 @@ const EditPage = ({editing}:{editing: boolean}) => {
             setTasks(response.data);
         });
     }, []);
+
+    const currentDate = new Date();
 /*
     // const data = {
     //             id: 5,
@@ -173,7 +175,7 @@ const EditPage = ({editing}:{editing: boolean}) => {
             {tasks.map((task, index) => (
                 <Table.Row key={index}>
                     <Table.RowHeaderCell>
-                        Insert Date {/* {task.due.toDateString()} */}
+                        {currentDate.toDateString()} {/* {task.due.toDateString()} for some reason it works with currentDate but not task.due*/}
                     </Table.RowHeaderCell>
                     <Table.Cell>
                         {task.status}
