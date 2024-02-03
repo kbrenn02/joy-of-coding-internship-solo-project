@@ -173,7 +173,7 @@ const EditPage = ({editing}:{editing: boolean}) => {
             {tasks.map((task, index) => (
                 <Table.Row key={index}>
                     <Table.RowHeaderCell>
-                        {task.due.toDateString()}
+                        Insert Date {/* {task.due.toDateString()} */}
                     </Table.RowHeaderCell>
                     <Table.Cell>
                         {task.status}
