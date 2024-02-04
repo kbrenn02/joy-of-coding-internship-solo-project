@@ -28,7 +28,7 @@ const EditPage = () => {
     }, []);
 
     const currentDate = new Date();
-    console.log(tasks[0])
+    console.log(tasks)
 
     const removeTask = async (index: number) => {
 		try {
