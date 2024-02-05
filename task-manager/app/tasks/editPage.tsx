@@ -20,6 +20,7 @@ const EditPage = () => {
  
     const [tasks, setTasks] = useState<TaskForm[]>([])
     const [isediting, setIsEditing] = useState(false);
+    // create useState variables for all inputs
     const [title, setTitle] = useState('');
 
     //this works to show the data in the table (but it's unstructured)
@@ -92,6 +93,7 @@ const EditPage = () => {
                     <Table.Cell>
                         {/* {task.title} */}
                         {/* editing one task at a time and changing just when in editing mode */}
+                        {/* changed this from task.title to just title */}
                         <div>
                             <input value={title} onChange = {(e) => (setTitle(e.target.value))}/>
                         </div>
