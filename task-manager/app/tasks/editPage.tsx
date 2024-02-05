@@ -20,6 +20,7 @@ const EditPage = () => {
  
     const [tasks, setTasks] = useState<TaskForm[]>([])
     const [isediting, setIsEditing] = useState(false);
+    const [title, setTitle] = useState('');
 
     //this works to show the data in the table (but it's unstructured)
     useEffect(() => {
@@ -28,54 +29,50 @@ const EditPage = () => {
         });
     }, []);
 
-    const currentDate = new Date();
     console.log(tasks[0])
 
+    // this works as a delete function. Was having issues with the refresh, so I had it send the user to the homepage
+    // after deleting a task
     const router = useRouter();
     const removeTask = async (index: number) => {
 		try {
 			await axios.delete(`/api/tasks/${tasks[index].id}`);
-			router.push('/tasks');
+			router.refresh();
+            router.push('/');
 		} catch (error) {
-			console.error('did not work:', error);
+			console.error('The following error occurred:', error);
 		}
 	};
 
-    // const updateTask = async (index: number) => {
-	// 	if (isediting) {
-    //         const data = {
-    //             title,
-    //             description,
-    //             due,
-    //             status
-    //         }
-    //         axios.patch(`/api/tasks/${tasks[index].id}`, data).then(response => console.log("success"))
-    //         .catch((error) => console.error("There was an error updating the task", error)
-    //         )
-    //     }
-        
-    //     setIsEditing(!isediting)
-    // };
+    const updateTask = async (index: number) => {
+		if (isediting) {
+            const data = {
+                title
+            }
+            axios.patch(`/api/tasks/${tasks[index].id}`, data).then(response => console.log("success"))
+            .catch((error) => console.error("There was an error updating the task", error)
+            )
+        }
+        setIsEditing(!isediting)
+    };
 
 //Edit Field function to handle edits
-    // const EditField = ({value, fieldType, handleChange}:{value : any, fieldType : any, handleChange : (e: React.ChangeEventHandler<HTMLInputElement>)}) => {
-    //     return (
-    //         <input
-    //           id="status"
-    //           type = {fieldType}
-    //           onChange={() => handleChange}
-    //           defaultValue={value}>
-    //         </input>
-    //     )
-    // }
-
-/*
-    const handleChange = (event:any) => {
-        data.status = event;
-        console.log(data)
+    const EditField = ({value, fieldType, handleChange}:{value : any, fieldType : any, handleChange : (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
+        return (
+            <input
+              id="status"
+              type = {fieldType}
+              onChange={handleChange}
+              defaultValue={value}>
+            </input>
+        )
     }
-    //  <EditField value={task.status} fieldType="string" handleChange={handleChange}/>
-*/
+
+    // const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     data.due = e
+    // }
+    // {isediting ? <EditField value={task.status} fieldType="string" handleChange={handleChange}/> : <span></span>
+    //
 
     return (
         <Table.Body>
@@ -84,7 +81,7 @@ const EditPage = () => {
                     <Table.RowHeaderCell>
                         {/* {currentDate.toDateString()} {task.due.toDateString()} for some reason it works with currentDate but not task.due */}
                         {/* {stringDate} */}
-                        {/* {task.due} */}
+                        {/* {task.due.toDateString()} */}
                         Date
                         {/* {JSON.stringify(task.due)} find right syntax to make it show the date */}
                     </Table.RowHeaderCell>
@@ -93,7 +90,11 @@ const EditPage = () => {
                         {index} {/* Will need to remove this */}
                     </Table.Cell>
                     <Table.Cell>
-                        {task.title}
+                        {/* {task.title} */}
+                        {/* editing one task at a time and changing just when in editing mode */}
+                        <div>
+                            <input value={title} onChange = {(e) => (setTitle(e.target.value))}/>
+                        </div>
                     </Table.Cell>
                     <Table.Cell>
                         {task.description}
@@ -101,8 +102,8 @@ const EditPage = () => {
                     <Table.Cell>
                         <Flex gap="2">
                                 <Button 
-                                className='w-1/2'>
-                                {/* onClick={() => updateTask(index)}> */}
+                                className='w-1/2'
+                                onClick={() => updateTask(index)}>
                                     { isediting ? "Save" : "Edit"}
                                 </Button>
                                 <Button 

@@ -22,7 +22,7 @@ export async function DELETE(request: NextRequest, {params}:{params: {id:string}
 }
 
 
-/*
+
 export async function PATCH(request: NextRequest, {params} : { params : {id : string }}) {
     const body = await request.json();
     console.log(body)
@@ -52,4 +52,4 @@ export async function PATCH(request: NextRequest, {params} : { params : {id : st
     console.log(updateTask)
 
     return NextResponse.json(updateTask)
-}*/
+}

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 enum Status {
     OPEN = "OPEN",
-    IN_PROGRESS = "IN PROGRESS",
+    IN_PROGRESS = "IN_PROGRESS",
     CLOSED = "CLOSED",
   }
 
@@ -13,10 +13,10 @@ export const createTaskSchema = z.object ({
 });
 
 export const patchTaskSchema = z.object ({
-    title: z.string().min(1, 'Title is required.').max(255),
-    description: z.string().min(1, 'Description is required'),
-    due: z.string().min(1, 'Due date for the task is required. This can be changed later.').transform((str) => new Date()),
-    status: z.nativeEnum(Status)
+    title: z.string().min(1, 'Title is required.').max(255).optional(),
+    description: z.string().min(1, 'Description is required').optional(),
+    due: z.string().min(1, 'Due date for the task is required. This can be changed later.').transform((str) => new Date()).optional(),
+    status: z.nativeEnum(Status).optional()
 })
 
 /* 
