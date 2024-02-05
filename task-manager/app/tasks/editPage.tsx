@@ -6,6 +6,7 @@ import Link from 'next/link';
 import prisma from '@/prisma/client';
 import axios from 'axios';
 import { EnumValues, object } from 'zod';
+import { useRouter } from 'next/navigation';
 
 const EditPage = () => {
     
@@ -28,14 +29,13 @@ const EditPage = () => {
     }, []);
 
     const currentDate = new Date();
-    console.log(tasks)
+    console.log(tasks[0])
 
+    const router = useRouter();
     const removeTask = async (index: number) => {
 		try {
 			await axios.delete(`/api/tasks/${tasks[index].id}`);
-			const newTasks = tasks;
-			newTasks.splice(index, 1);
-			setTasks(newTasks);
+			router.push('/tasks');
 		} catch (error) {
 			console.error('did not work:', error);
 		}
@@ -82,7 +82,11 @@ const EditPage = () => {
             {tasks.map((task, index) => (
                 <Table.Row key={index}>
                     <Table.RowHeaderCell>
-                        {currentDate.toDateString()} {/* {task.due.toDateString()} for some reason it works with currentDate but not task.due*/}
+                        {/* {currentDate.toDateString()} {task.due.toDateString()} for some reason it works with currentDate but not task.due */}
+                        {/* {stringDate} */}
+                        {/* {task.due} */}
+                        Date
+                        {/* {JSON.stringify(task.due)} find right syntax to make it show the date */}
                     </Table.RowHeaderCell>
                     <Table.Cell>
                         {task.status}
