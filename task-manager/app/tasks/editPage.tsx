@@ -30,7 +30,7 @@ const EditPage = () => {
         });
     }, []);
 
-    console.log(tasks[0])
+    // console.log(tasks[0])
 
     // this works as a delete function. Was having issues with the refresh, so I had it send the user to the homepage
     // after deleting a task
@@ -46,7 +46,10 @@ const EditPage = () => {
 	};
 
     const updateTask = async (index: number) => {
-		if (isediting) {
+		const dbData = await axios.get(`/api/tasks/${tasks[index].id}`)
+        const task = dbData.data // the task data from the database is now assigned to the const task
+        
+        if (isediting) {
             const data = {
                 title
             }
@@ -94,9 +97,11 @@ const EditPage = () => {
                         {/* {task.title} */}
                         {/* editing one task at a time and changing just when in editing mode */}
                         {/* changed this from task.title to just title */}
-                        <div>
+                        { isediting ? 
+                        <span>
                             <input value={title} onChange = {(e) => (setTitle(e.target.value))}/>
-                        </div>
+                        </span> : <span>{title}</span>
+                        }
                     </Table.Cell>
                     <Table.Cell>
                         {task.description}

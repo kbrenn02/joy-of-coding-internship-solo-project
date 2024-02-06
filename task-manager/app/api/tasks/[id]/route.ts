@@ -3,6 +3,8 @@ import { createTaskSchema, patchTaskSchema } from "../../../validationSchema";
 import prisma from "@/prisma/client";
 import { error } from "console";
 
+
+// function to delete a record
 export async function DELETE(request: NextRequest, {params}:{params: {id:string}}) {
     // fetch task from db
     const task = await prisma.task.findUnique({
@@ -22,7 +24,7 @@ export async function DELETE(request: NextRequest, {params}:{params: {id:string}
 }
 
 
-
+// function to update a record
 export async function PATCH(request: NextRequest, {params} : { params : {id : string }}) {
     const body = await request.json();
     console.log(body)
@@ -53,3 +55,20 @@ export async function PATCH(request: NextRequest, {params} : { params : {id : st
 
     return NextResponse.json(updateTask)
 }
+
+
+// function to get just 1 record (as opposed to all, which the other file pulls with findMany())
+export async function GET(request: NextRequest, {params}: { params: { id: string } }) {
+    //Fetch from DB the task with the specified id
+    const task = await prisma.task.findUnique({
+        where: {id: parseInt(params.id)}
+    })
+    //If not found return 404
+    //Else return actual data
+    if (!task)
+        return NextResponse.json({error: "round not found"}, {status: 404})
+ 
+ 
+    return NextResponse.json(task)
+ }
+ 
