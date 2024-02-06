@@ -22,6 +22,9 @@ const EditPage = () => {
     const [isediting, setIsEditing] = useState(false);
     // create useState variables for all inputs
     const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    // const [due, setDue] = useState('');
+    // const [status, setStatus] = useState('');
 
     //this works to show the data in the table (but it's unstructured)
     useEffect(() => {
@@ -51,7 +54,8 @@ const EditPage = () => {
         
         if (isediting) {
             const data = {
-                title
+                title,
+                description
             }
             axios.patch(`/api/tasks/${tasks[index].id}`, data).then(response => console.log("success"))
             .catch((error) => console.error("There was an error updating the task", error)
@@ -72,9 +76,10 @@ const EditPage = () => {
         )
     }
 
-    // const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     data.due = e
-    // }
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+
+    }
     // {isediting ? <EditField value={task.status} fieldType="string" handleChange={handleChange}/> : <span></span>
     //
 
@@ -99,12 +104,16 @@ const EditPage = () => {
                         {/* changed this from task.title to just title */}
                         { isediting ? 
                         <span>
-                            <input value={title} onChange = {(e) => (setTitle(e.target.value))}/>
-                        </span> : <span>{title}</span>
+                            <input placeholder={task.title} onChange = {(e) => (setTitle(e.target.value))}/>
+                        </span> : <span>{task.title}</span>
                         }
                     </Table.Cell>
                     <Table.Cell>
-                        {task.description}
+                    { isediting ? 
+                        <span>
+                            <input placeholder={task.description} onChange = {(e) => (setTitle(e.target.value))}/>
+                        </span> : <span>{task.description}</span>
+                        }
                     </Table.Cell>
                     <Table.Cell>
                         <Flex gap="2">
