@@ -23,10 +23,11 @@ const EditPage = () => {
     // create useState variables for all inputs
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    // useState was having an issue with Date type (due) and Enum type (status)
     // const [due, setDue] = useState('');
     // const [status, setStatus] = useState('');
 
-    //this works to show the data in the table (but it's unstructured)
+    //this works to show the data in the table
     useEffect(() => {
         axios.get(`/api/tasks`).then(function(response) {
             setTasks(response.data);
@@ -105,11 +106,13 @@ const EditPage = () => {
                         {/* changed this from task.title to just title */}
                         { isediting ? 
                         <span>
-                            <input placeholder={task.title} onChange = {(e) => (setTitle(e.target.value))}/>
+                            <input placeholder={title} onChange = {(e) => (setTitle(e.target.value))}/>
                         </span> : <span>{task.title}</span>
                         }
                     </Table.Cell>
                     <Table.Cell>
+                        {/* Issue is that I want to set the value to task.title, but if I set it to just title, then
+                        it makes the same title for all rows, instead of changing the title depending on the task */}
                     { isediting ? 
                         <span>
                             <input placeholder={task.description} onChange = {(e) => (setDescription(e.target.value))}/>
