@@ -75,17 +75,17 @@ const TaskRow = (task: any) => {
             </Table.RowHeaderCell>
             <Table.Cell>
                 { isediting ? 
-                <span>
-                    <input value={status} onChange = {(e) => (setStatus(e.target.value))}/>
-                </span> : <span>{status}</span>
+                <select
+                    value={status}
+                    onChange = {(e)=>setStatus(e.target.value)}>
+                    <option>OPEN</option>
+                    <option>IN_PROGRESS</option>
+                    <option>CLOSED</option>
+                </select>
+                : <span>{status}</span>
                 }
 
-                        <select id='intensity'
-                                onChange = {(e)=>setStatus(e.target.value)}>
-                                <option selected>OPEN</option>
-                                <option>IN_PROGRESS</option>
-                                <option>CLOSED</option>
-                            </select>
+                        
                             
                             {/* <select id='intensity'
                                 onChange = {(e)=>setIntensityType(e.target.value)}>
