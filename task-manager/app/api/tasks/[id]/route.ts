@@ -46,7 +46,7 @@ export async function PATCH(request: NextRequest, {params} : { params : {id : st
         data: {
             title: body.title, 
             description: body.description, 
-            due: body.due,
+            due: new Date(body.due),
             status: body.status
         }
     })

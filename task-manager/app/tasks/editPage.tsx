@@ -7,6 +7,8 @@ import prisma from '@/prisma/client';
 import axios from 'axios';
 import { EnumValues, object } from 'zod';
 import { useRouter } from 'next/navigation';
+import TaskRow from './taskRow';
+
 
 const EditPage = () => {
     
@@ -19,6 +21,9 @@ const EditPage = () => {
     }
  
     const [tasks, setTasks] = useState<TaskForm[]>([])
+    const [filteredTask, setFilteredTasks] = useState<TaskForm[]>([])
+    // look up the javascript for how to filter an array
+    // then instead of looping through tasks, loop through filtered
     const [isediting, setIsEditing] = useState(false);
     // create useState variables for all inputs
     const [title, setTitle] = useState('');
@@ -88,53 +93,8 @@ const EditPage = () => {
 
     return (
         <Table.Body>
-            {tasks.map((task, index) => (
-                <Table.Row key={index}>
-                    <Table.RowHeaderCell>
-                        {/* {currentDate.toDateString()} {task.due.toDateString()} for some reason it works with currentDate but not task.due */}
-                        {/* {stringDate} */}
-                        {/* {task.due.toDateString()} */}
-                        Date
-                        {/* {JSON.stringify(task.due)} find right syntax to make it show the date */}
-                    </Table.RowHeaderCell>
-                    <Table.Cell>
-                        {task.status}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {/* {task.title} */}
-                        {/* editing one task at a time and changing just when in editing mode */}
-                        {/* changed this from task.title to just title */}
-                        { isediting ? 
-                        <span>
-                            <input placeholder={title} onChange = {(e) => (setTitle(e.target.value))}/>
-                        </span> : <span>{task.title}</span>
-                        }
-                    </Table.Cell>
-                    <Table.Cell>
-                        {/* Issue is that I want to set the value to task.title, but if I set it to just title, then
-                        it makes the same title for all rows, instead of changing the title depending on the task */}
-                    { isediting ? 
-                        <span>
-                            <input placeholder={task.description} onChange = {(e) => (setDescription(e.target.value))}/>
-                        </span> : <span>{task.description}</span>
-                        }
-                    </Table.Cell>
-                    <Table.Cell>
-                        <Flex gap="2">
-                                <Button 
-                                className='w-1/2'
-                                onClick={() => updateTask(index)}>
-                                    { isediting ? "Save" : "Edit"}
-                                </Button>
-                                <Button 
-                                className='w-1/2' 
-                                color="red"
-                                onClick={() => removeTask(index)}>
-                                    Delete
-                                </Button>
-                           </Flex>
-                       </Table.Cell>
-                </Table.Row>
+            {tasks.map((task) => (
+                <TaskRow task={task} key={task.id}/>
             ))}
         </Table.Body>
     )
