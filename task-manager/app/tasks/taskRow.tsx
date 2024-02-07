@@ -69,6 +69,7 @@ const TaskRow = (task: any) => {
                 { isediting ? 
                 <span>
                     <input value={due} type="date" onChange = {(e) => (setDue(e.target.value))}/>
+                    <p>Current Due: {new Date(due).toDateString()}</p>
                 </span> : <span>{new Date(due).toDateString()}</span>
                 }
                         {/* {JSON.stringify(task.due)} find right syntax to make it show the date */}
@@ -94,9 +95,9 @@ const TaskRow = (task: any) => {
             </Table.Cell>
             <Table.Cell>
                 { isediting ? 
-                    <span>
-                        <input value={description} onChange = {(e) => (setDescription(e.target.value))}/>
-                    </span> : <span>{description}</span>
+                    <span className='w-16'>
+                        <input className='w-full' value={description} onChange = {(e) => (setDescription(e.target.value))}/>
+                    </span> : <span className='w-16'>{description}</span>
                 }
             </Table.Cell>
             <Table.Cell>
