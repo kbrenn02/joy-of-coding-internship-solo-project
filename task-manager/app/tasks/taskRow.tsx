@@ -49,7 +49,7 @@ const TaskRow = (task: any) => {
     // this works as a delete function. Was having issues with the refresh, so I had it send the user to the homepage
     // after deleting a task
     const router = useRouter();
-    const removeTask = async (index: number) => {
+    const removeTask = async () => {
 		try {
 			await axios.delete(`/api/tasks/${task.task.id}`);
 			router.refresh();
@@ -84,19 +84,8 @@ const TaskRow = (task: any) => {
                 </select>
                 : <span>{status}</span>
                 }
-
-                        
-                            
-                            {/* <select id='intensity'
-                                onChange = {(e)=>setIntensityType(e.target.value)}>
-                                <option selected={intensityType==='effort'}>Effort</option>
-                                <option selected={intensityType==='pace'}>Pace</option>
-                            </select> */}
             </Table.Cell>
             <Table.Cell>
-                        {/* {task.title} */}
-                        {/* editing one task at a time and changing just when in editing mode */}
-                        {/* changed this from task.title to just title */}
                 { isediting ? 
                 <span>
                     <input value={title} onChange = {(e) => (setTitle(e.target.value))}/>
@@ -104,36 +93,34 @@ const TaskRow = (task: any) => {
                 }
             </Table.Cell>
             <Table.Cell>
-                        {/* Issue is that I want to set the value to task.title, but if I set it to just title, then
-                        it makes the same title for all rows, instead of changing the title depending on the task */}
-            { isediting ? 
-                <span>
-                    <input value={description} onChange = {(e) => (setDescription(e.target.value))}/>
-                </span> : <span>{description}</span>
-            }
+                { isediting ? 
+                    <span>
+                        <input value={description} onChange = {(e) => (setDescription(e.target.value))}/>
+                    </span> : <span>{description}</span>
+                }
             </Table.Cell>
             <Table.Cell>
-                        <Flex gap="2">
-                                <Button 
-                                className='w-1/2'
-                                onClick={() => updateTask()}>
-                                    Edit
-                                </Button>
-                                <Button 
-                                className='w-1/2' 
-                                color="red">
-                                {/* onClick={() => removeTask(index)}> */}
-                                    Delete
-                                </Button>
-                                <Button 
-                                className='w-1/2'
-                                onClick={() => saveTask()}>
-                                    Save
-                                </Button>
-                           </Flex>
-                       </Table.Cell>
-                </Table.Row>
-  )
+                <Flex gap="3">
+                    <Button 
+                    className='w-1/2'
+                    onClick={() => updateTask()}>
+                        Edit
+                    </Button>
+                    <Button 
+                    className='w-1/2' 
+                    color="red"
+                    onClick={() => removeTask()}>
+                        Delete
+                    </Button>
+                    <Button 
+                    className='w-1/2'
+                    onClick={() => saveTask()}>
+                        Save
+                    </Button>
+                </Flex>
+            </Table.Cell>
+        </Table.Row>
+    )
 }
 
 export default TaskRow
