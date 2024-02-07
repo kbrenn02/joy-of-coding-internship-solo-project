@@ -23,7 +23,6 @@ const TaskRow = (task: any) => {
     
     
     const updateTask = async () => {
-        
         setIsEditing(!isediting)
     };
 
@@ -115,6 +114,7 @@ const TaskRow = (task: any) => {
                     </Button>
                     <Button 
                     className='w-1/2'
+                    color="green"
                     onClick={() => saveTask()}>
                         Save
                     </Button>
