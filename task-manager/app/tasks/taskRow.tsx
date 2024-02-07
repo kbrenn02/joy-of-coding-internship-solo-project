@@ -2,6 +2,7 @@ import React, { useState, useEffect, ChangeEventHandler } from 'react'
 import { Button, Table, Flex, TableBody } from '@radix-ui/themes';
 import { EnumValues, object } from 'zod';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 
 interface TaskForm {
@@ -43,6 +44,20 @@ const TaskRow = (task: any) => {
         }
         setIsEditing(!isediting)
     }
+
+
+    // this works as a delete function. Was having issues with the refresh, so I had it send the user to the homepage
+    // after deleting a task
+    const router = useRouter();
+    const removeTask = async (index: number) => {
+		try {
+			await axios.delete(`/api/tasks/${task.task.id}`);
+			router.refresh();
+            router.push('/');
+		} catch (error) {
+			console.error('The following error occurred:', error);
+		}
+	};
 
 
     return (
