@@ -27,7 +27,6 @@ const TaskRow = (task: any) => {
     };
 
     // date is automatically in GMT -- switch to local time before pushing. Convert PST to GMT then push (so 12am PST, submit 8am GMT)
-    // drop down with only enum values for status
     const saveTask = async () => {
         if (isediting) {
             const data = {
@@ -62,18 +61,16 @@ const TaskRow = (task: any) => {
     return (
         <Table.Row>
             <Table.RowHeaderCell>
-                        {/* {currentDate.toDateString()} {task.due.toDateString()} for some reason it works with currentDate but not task.due */}
-                        {/* {stringDate} */}
-                        {/* {task.due.toDateString()} */}
+                {/* Date */}
                 { isediting ? 
                 <span>
                     <input value={due} type="date" onChange = {(e) => (setDue(e.target.value))}/>
                     <p>Current Due: {new Date(due).toDateString()}</p>
                 </span> : <span>{new Date(due).toDateString()}</span>
                 }
-                        {/* {JSON.stringify(task.due)} find right syntax to make it show the date */}
             </Table.RowHeaderCell>
             <Table.Cell>
+                {/* Status */}
                 { isediting ? 
                 <select
                     value={status}
@@ -86,6 +83,7 @@ const TaskRow = (task: any) => {
                 }
             </Table.Cell>
             <Table.Cell>
+                {/* Title of task */}
                 { isediting ? 
                 <span>
                     <input value={title} onChange = {(e) => (setTitle(e.target.value))}/>
@@ -93,6 +91,7 @@ const TaskRow = (task: any) => {
                 }
             </Table.Cell>
             <Table.Cell>
+                {/* Description of task */}
                 { isediting ? 
                     <span className='w-16'>
                         <input className='w-full' value={description} onChange = {(e) => (setDescription(e.target.value))}/>
@@ -100,6 +99,7 @@ const TaskRow = (task: any) => {
                 }
             </Table.Cell>
             <Table.Cell>
+                {/* Buttons to Edit / Delete / Save */}
                 <Flex gap="3">
                     <Button 
                     className='w-1/2'
