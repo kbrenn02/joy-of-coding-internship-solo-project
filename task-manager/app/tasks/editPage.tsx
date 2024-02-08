@@ -19,66 +19,68 @@ interface TaskForm {
 const EditPage = (input: any) => {
  
     const [tasks, setTasks] = useState<TaskForm[]>([])
-    const [filteredTasks, setFilteredTasks] = useState<TaskForm[]>([])
-    // look up the javascript for how to filter an array
-    // then instead of looping through tasks, loop through filtered
 
-    //this works to show the data in the table
+    //this works to show the data in the table based on id number
     useEffect(() => {
         axios.get(`/api/tasks`).then(function(response) {
             setTasks(response.data);
         });
     }, []);
 
-    console.log(typeof(tasks))
-    // console.log(typeof(tasks[0].due))
-    // console.log(typeof(tasks[0].status))
-    // setFilteredTasks(tasks.sort((firstItem, secondItem) => secondItem.id - firstItem.id));
-    // console.log("break")
-    // console.log(filteredTasks)
-
+    
     function sortByStatusDes(a: any, b: any) {      
-        const A = a.input;
-        const B = b.input
-        
+        const A = a.status;
+        const B = b.status;
+                
         let comparison = 0;
         if (A > B) {
-          comparison = -1;
+            comparison = -1;
         } else if (A < B) {
-          comparison = 1;
+            comparison = 1;
         }
-        
         return comparison;
-      }
+        }
 
     function sortByDateAsc(a: any, b: any) {      
-        const A = a.input;
-        const B = b.input
-        
+        const A = a.due;
+        const B = b.due;
+                
         let comparison = 0;
         if (A > B) {
-          comparison = -1;
+            comparison = -1;
         } else if (A < B) {
-          comparison = 1;
+            comparison = 1;
         }
-        
         return comparison * -1; 
-      }
+        }
     
-    console.log("filtered")
-    // console.log(tasks.sort(compare))
-    console.log(input)
+    
+    const listOfTasks = (input: any) => {
+        if (input == "due") {
+            tasks.sort(sortByDateAsc);
+        } else if (input == "status") {
+            tasks.sort(sortByStatusDes);
+        } else {
+            
+        }
+    }
 
+    listOfTasks(input.input)
+
+    // the tests I needed to perform to find out what I needed to input into the listOfTasks function. I'm sure there's
+    // a better way to write the above code, but what I found works so I'm not complaining
+    // // console.log(typeof(input))
+    // console.log(input.input)
+    // console.log(typeof(input.input))
+    // // console.log("filtered")
+    // console.log(tasks)
+    // // console.log(tasks.sort(compare))
+    // // console.log(input)
 
 
 
     return (
         <>
-            {/* <button
-                onClick={compare()}>
-                click
-            </button> */}
-
             <Table.Body>
                 {tasks.map((task) => (
                     <TaskRow task={task} key={task.id}/>
