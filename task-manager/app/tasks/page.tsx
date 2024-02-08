@@ -16,16 +16,28 @@ import EditPage from './editPage';
 
 const TasksPage = () => {
     
-    // const [isediting, setIsEditing] = useState(false);
-    // console.log(editing)
-    // var isediting = true
+    const [inputs, setInputs] = useState('');
 
 
     return (
         <>
-            <div className='ml-4'>
+            {/* <div className='ml-4'>
                 <Button><Link href='/tasks/new'>New Task</Link></Button>
-            </div>
+            </div> */}
+
+            <Flex gap="3">
+                    <Button 
+                    className='ml-4'>
+                        <Link href='/tasks/new'>New Task</Link>
+                    </Button>
+                    <select
+                        defaultValue={"Filter"}
+                        onChange = {(e)=>setInputs(e.target.value)}>
+                        <option>Filter</option>
+                        <option>due</option>
+                        <option>status</option>
+                    </select>
+            </Flex>
 
             <Table.Root className='mt-4'>
                 <Table.Header>
@@ -37,8 +49,8 @@ const TasksPage = () => {
                         <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
                     </Table.Row>
                 </Table.Header>
-                
-                <EditPage />  
+
+                <EditPage input={inputs}/>  
             </Table.Root>
             
         </>

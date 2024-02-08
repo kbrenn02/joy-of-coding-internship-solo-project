@@ -16,7 +16,7 @@ interface TaskForm {
 }
 
 
-const EditPage = () => {
+const EditPage = (input: any) => {
  
     const [tasks, setTasks] = useState<TaskForm[]>([])
     const [filteredTasks, setFilteredTasks] = useState<TaskForm[]>([])
@@ -66,8 +66,8 @@ const EditPage = () => {
       }
     
     console.log("filtered")
-    console.log(tasks.sort(compare))
-               
+    // console.log(tasks.sort(compare))
+    console.log(input)
 
 
 
