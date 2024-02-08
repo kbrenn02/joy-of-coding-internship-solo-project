@@ -37,13 +37,8 @@ const TasksPage = () => {
                         <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
                     </Table.Row>
                 </Table.Header>
-
-                {/* tasks.map(task) is a function that goes through every line of data. Task.XXX calls the data
-                with that specific header. This function has an issue showing date types, so task.due.toDateString() 
-                is needed to turn the date type to a string type*/}
                 
-                
-              <EditPage />  
+                <EditPage />  
             </Table.Root>
             
         </>
