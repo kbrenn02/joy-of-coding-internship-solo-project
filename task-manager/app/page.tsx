@@ -40,8 +40,6 @@ export default function Home() {
     const listOfTasks = () => {
         tasks.sort(sortByDateAsc);}
 
-    console.log(tasks[0])
-
     return (
         <div className="h-screen">
         {/* Need to center the title "welcome to task manager" */}
@@ -51,7 +49,12 @@ export default function Home() {
                     Div 1
                 </div>
                 <div className="bg-orange-400 w-1/2 h-full border border-gray-light rounded-xl shadow">
-                    Div 2
+                    {/* getting an "Unhandled Runtime Error" after making an update to the tasks on the table*/}
+                    {/* <div>{new Date(tasks[0].due).toDateString()}</div>
+                    <div>{tasks[0].title}</div>
+                    <div>{tasks[0].description}</div>
+                    <div>{tasks[0].status}</div> */}
+                    Placeholder
                 </div>
             </Flex>       
         </div>

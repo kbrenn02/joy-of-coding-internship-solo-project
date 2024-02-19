@@ -54,14 +54,27 @@ const EditPage = (input: any) => {
         return comparison * -1; 
         }
     
+    function sortDefault(a: any, b: any) {      
+        const A = a.id;
+        const B = b.id;
+                    
+        let comparison = 0;
+        if (A > B) {
+            comparison = -1;
+        } else if (A < B) {
+            comparison = 1;
+        }
+        return comparison * -1; 
+        }
+    
     
     const listOfTasks = (input: any) => {
         if (input == "due") {
             tasks.sort(sortByDateAsc);
         } else if (input == "status") {
             tasks.sort(sortByStatusDes);
-        } else {
-            
+        } else if (input == "Filter") {
+            tasks.sort(sortDefault)
         }
     }
 
