@@ -37,7 +37,6 @@ const DataChart = () => {
 
     useEffect(() => {
         if (data.length > 0) {
-            const ids = data.map((task) => task.id);
             const statuses = data.map((task) => task.status.toString())
 
             for (let i=0; i<statuses.length; i++) {
@@ -50,15 +49,40 @@ const DataChart = () => {
                 }
             }
 
+            console.log("status1", statuses)
+        }
+    }, [data]);
+
+    console.log("open1", open)
+    console.log(inProgress)
+    console.log(closed)
+
+    useEffect(() => {
+        if (data.length > 0) {
+            // const ids = data.map((task) => task.id);
+            // const statuses = data.map((task) => task.status.toString())
+
+            // for (let i=0; i<statuses.length; i++) {
+            //     if (statuses[i] == "OPEN") {
+            //         setOpen(open+1);
+            //     } else if (statuses[i] == "IN_PROGRESS") {
+            //         setInProgress(inProgress+1);
+            //     } else if (statuses[i] == "CLOSED") {
+            //         setClosed(closed+1)
+            //     }
+            // }
+
+            console.log("open2", open)
+            console.log(inProgress)
+            console.log(closed)
 
             const ctx = document.getElementById('myChart') as HTMLCanvasElement;
 
             new Chart(ctx, {
-                type: 'bar',
+                type: 'doughnut',
                 data: {
-                    labels: ["Open Tasks", "In Progress Tasks", "Closed Tasks"],
+                    labels: ["Open", "In Progress", "Closed"],
                     datasets: [{
-                        label: "Data Category",
                         data: [open, inProgress, closed]
                         // backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         // borderColor: 'rgba(75, 192, 192, 1)',
@@ -68,6 +92,9 @@ const DataChart = () => {
             });
         }
     }, [data]);
+
+    
+    
 
 
     return (
