@@ -35,11 +35,12 @@ const DataChart = () => {
         getData();
     }, []);
 
-    useEffect(() => {
+    // useEffect(() => {
         if (data.length > 0) {
             const statuses = data.map((task) => task.status.toString())
 
-            for (let i=0; i<statuses.length; i++) {
+            let i=0;
+            while (i<statuses.length) {
                 if (statuses[i] == "OPEN") {
                     setOpen(open+1);
                 } else if (statuses[i] == "IN_PROGRESS") {
@@ -47,11 +48,13 @@ const DataChart = () => {
                 } else if (statuses[i] == "CLOSED") {
                     setClosed(closed+1)
                 }
+                i++;
+                console.log("current i value", i)
             }
 
             console.log("status1", statuses)
         }
-    }, [data]);
+    // }, [data]);
 
     console.log("open1", open)
     console.log(inProgress)
