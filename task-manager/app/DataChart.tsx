@@ -35,25 +35,26 @@ const DataChart = () => {
         getData();
     }, []);
 
+    // BY RUNNING JUST THE IF STATEMENT, IT CAUSES AN INFINITE LOOP
     // useEffect(() => {
-        if (data.length > 0) {
-            const statuses = data.map((task) => task.status.toString())
+        // if (data.length > 0) {
+        //     const statuses = data.map((task) => task.status.toString())
 
-            let i=0;
-            while (i<statuses.length) {
-                if (statuses[i] == "OPEN") {
-                    setOpen(open+1);
-                } else if (statuses[i] == "IN_PROGRESS") {
-                    setInProgress(inProgress+1);
-                } else if (statuses[i] == "CLOSED") {
-                    setClosed(closed+1)
-                }
-                i++;
-                console.log("current i value", i)
-            }
+        //     let i=0;
+        //     while (i<statuses.length) {
+        //         if (statuses[i] == "OPEN") {
+        //             setOpen(open+1);
+        //         } else if (statuses[i] == "IN_PROGRESS") {
+        //             setInProgress(inProgress+1);
+        //         } else if (statuses[i] == "CLOSED") {
+        //             setClosed(closed+1)
+        //         }
+        //         i++;
+        //         console.log("current i value", i)
+        //     }
 
-            console.log("status1", statuses)
-        }
+        //     console.log("status1", statuses)
+        // }
     // }, [data]);
 
     console.log("open1", open)
@@ -86,7 +87,7 @@ const DataChart = () => {
                 data: {
                     labels: ["Open", "In Progress", "Closed"],
                     datasets: [{
-                        data: [open, inProgress, closed]
+                        data: [3, 5, 2]
                         // backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         // borderColor: 'rgba(75, 192, 192, 1)',
                         // borderWidth: 1
