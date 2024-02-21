@@ -16,6 +16,9 @@ interface TaskForm {
 const DataChart = () => {
 
     const [data, setData] = useState<TaskForm[]>([]);
+    const [open, setOpen] = useState(0);
+    const [inProgress, setInProgress] = useState(0);
+    const [closed, setClosed] = useState(0);
 
     useEffect(() => {
         const getData = async() => {
@@ -33,22 +36,33 @@ const DataChart = () => {
     }, []);
 
     useEffect(() => {
-        if (data.length >0) {
+        if (data.length > 0) {
             const ids = data.map((task) => task.id);
-            const statuses = data.map((task) => task.status)
+            const statuses = data.map((task) => task.status.toString())
+
+            for (let i=0; i<statuses.length; i++) {
+                if (statuses[i] == "OPEN") {
+                    setOpen(open+1);
+                } else if (statuses[i] == "IN_PROGRESS") {
+                    setInProgress(inProgress+1);
+                } else if (statuses[i] == "CLOSED") {
+                    setClosed(closed+1)
+                }
+            }
+
 
             const ctx = document.getElementById('myChart') as HTMLCanvasElement;
 
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ids,
+                    labels: ["Open Tasks", "In Progress Tasks", "Closed Tasks"],
                     datasets: [{
                         label: "Data Category",
-                        data: statuses,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
+                        data: [open, inProgress, closed]
+                        // backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        // borderColor: 'rgba(75, 192, 192, 1)',
+                        // borderWidth: 1
                     }]
                 }
             });
