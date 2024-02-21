@@ -5,6 +5,7 @@ import { Flex } from "@radix-ui/themes";
 import axios from 'axios';
 import { EnumValues } from 'zod';
 import React, { useState, useEffect } from 'react';
+import DataChart from "./DataChart";
 
 interface TaskForm {
     id: number;
@@ -47,6 +48,7 @@ export default function Home() {
             <Flex gap="2" className="w-full h-full">
                 <div className="bg-red-400 w-1/2 h-full p-4 border border-gray-light rounded-xl shadow">
                     Div 1
+                    <DataChart />
                 </div>
                 <div className="bg-orange-400 w-1/2 h-full p-4 border border-gray-light rounded-xl shadow">
                     {/* getting an "Unhandled Runtime Error" after making an update to the tasks on the table*/}
