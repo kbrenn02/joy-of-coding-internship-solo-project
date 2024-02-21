@@ -43,12 +43,12 @@ export default function Home() {
     return (
         <div className="h-screen">
         {/* Need to center the title "welcome to task manager" */}
-            <div className="flex justify-center h-16 text-3xl font-extrabold">Welcome to the Task Manager</div>
+            <div className="flex justify-center h-16 text-3xl font-extrabold">Welcome to your Task Manager</div>
             <Flex gap="2" className="w-full h-full">
-                <div className="bg-red-400 w-1/2 h-full border border-gray-light rounded-xl shadow">
+                <div className="bg-red-400 w-1/2 h-full p-4 border border-gray-light rounded-xl shadow">
                     Div 1
                 </div>
-                <div className="bg-orange-400 w-1/2 h-full border border-gray-light rounded-xl shadow">
+                <div className="bg-orange-400 w-1/2 h-full p-4 border border-gray-light rounded-xl shadow">
                     {/* getting an "Unhandled Runtime Error" after making an update to the tasks on the table*/}
                     {/* <div>{new Date(tasks[0].due).toDateString()}</div>
                     <div>{tasks[0].title}</div>
