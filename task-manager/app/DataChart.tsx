@@ -88,6 +88,7 @@ const DataChart = () => {
                     labels: ["Open", "In Progress", "Closed"],
                     datasets: [{
                         data: [3, 5, 2]
+                        // FIGURE OUT HOW TO ADD THE COUNT OF EACH TASK TYPE TO THE LABEL
                         // backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         // borderColor: 'rgba(75, 192, 192, 1)',
                         // borderWidth: 1
