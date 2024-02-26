@@ -38,28 +38,50 @@ const DataChart = () => {
     // BY RUNNING JUST THE IF STATEMENT, IT CAUSES AN INFINITE LOOP
     // useEffect(() => {
         // if (data.length > 0) {
-        //     const statuses = data.map((task) => task.status.toString())
-
-        //     let i=0;
-        //     while (i<statuses.length) {
-        //         if (statuses[i] == "OPEN") {
-        //             setOpen(open+1);
-        //         } else if (statuses[i] == "IN_PROGRESS") {
-        //             setInProgress(inProgress+1);
-        //         } else if (statuses[i] == "CLOSED") {
-        //             setClosed(closed+1)
+    const statuses = data.map((task) => task.status.toString())
+        //         const chartData = () => {
+        //             let i=0;
+        //             while (i<statuses.length) {
+        //                 if (statuses[i] == "OPEN") {
+        //                     setOpen(open+1);
+        //                 } else if (statuses[i] == "IN_PROGRESS") {
+        //                     setInProgress(inProgress+1);
+        //                 } else if (statuses[i] == "CLOSED") {
+        //                     setClosed(closed+1)
+        //                 }
+        //                 i++;
+        //                 console.log("current i value", i)
+        //             }
         //         }
-        //         i++;
-        //         console.log("current i value", i)
-        //     }
+        // chartData();
 
+    // Attempt at incrementer. Need to ask Suzanne
+    const handleIncrement = () => {
+        statuses.forEach(item => {
+              if (item === "OPEN") {
+                setOpen(open + 1); // Increment count by 1
+              } else if (item === "IN_PROGRESS") {
+                setInProgress(inProgress + 1);
+              } else if (item === "CLOSED"){
+                setClosed(closed + 1);
+              }
+            });
+          };
+        
+          // Call handleIncrement function when component renders
+    useEffect(() => {
+        handleIncrement();
+    }, []);
         //     console.log("status1", statuses)
         // }
     // }, [data]);
 
+    console.log("statuses", statuses)
+    console.log("statuses length", statuses.length)
+    console.log("statuses1", statuses[1])
     console.log("open1", open)
-    console.log(inProgress)
-    console.log(closed)
+    console.log("inProgress1", inProgress)
+    console.log("closed1", closed)
 
     useEffect(() => {
         if (data.length > 0) {
@@ -76,9 +98,9 @@ const DataChart = () => {
             //     }
             // }
 
-            console.log("open2", open)
-            console.log(inProgress)
-            console.log(closed)
+            // console.log("open2", open)
+            // console.log(inProgress)
+            // console.log(closed)
 
             const ctx = document.getElementById('myChart') as HTMLCanvasElement;
 
@@ -87,7 +109,7 @@ const DataChart = () => {
                 data: {
                     labels: ["Open", "In Progress", "Closed"],
                     datasets: [{
-                        data: [3, 5, 2]
+                        data: [open, inProgress, closed]
                         // FIGURE OUT HOW TO ADD THE COUNT OF EACH TASK TYPE TO THE LABEL
                         // backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         // borderColor: 'rgba(75, 192, 192, 1)',
