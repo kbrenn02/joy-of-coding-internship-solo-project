@@ -39,7 +39,10 @@ export default function Home() {
         }
 
     const listOfTasks = () => {
-        tasks.sort(sortByDateAsc);}
+        tasks.sort(sortByDateAsc);};
+
+    listOfTasks();
+    console.log(tasks[0].title)
 
     return (
         <div className="h-screen">
@@ -47,11 +50,11 @@ export default function Home() {
             <div className="flex justify-center h-16 text-3xl font-extrabold">Welcome to your Task Manager</div>
             <Flex gap="2" className="w-full h-full">
                 <div className="bg-white w-1/2 h-full p-4 border border-gray-light rounded-xl shadow">
-                    Div 1
                     <DataChart />
                 </div>
                 <div className="bg-orange-400 w-1/2 h-full p-4 border border-gray-light rounded-xl shadow">
                     {/* getting an "Unhandled Runtime Error" after making an update to the tasks on the table*/}
+                    {/* 2/26: getting an "Unhandled Runtime Error" and now it doesn't show anything from the task*/}
                     {/* <div>{new Date(tasks[0].due).toDateString()}</div>
                     <div>{tasks[0].title}</div>
                     <div>{tasks[0].description}</div>
