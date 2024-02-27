@@ -11,7 +11,7 @@ const CountTasks = () => {
                 const response = await axios.get('/api/tasks');
                 const items = response.data
 
-                const countResponse = await axios.post('/api/tasks', {
+                const countResponse = await axios.post('/api/count', {
                     where: {
                         status: 'OPEN'
                     }

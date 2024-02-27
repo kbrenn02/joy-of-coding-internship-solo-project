@@ -14,7 +14,7 @@ interface TaskForm {
 }
 
 
-const DataChart = async() => {
+const DataChart = () => {
 
     const [data, setData] = useState<TaskForm[]>([]);
 
