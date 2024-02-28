@@ -62,6 +62,18 @@ const DataChart = () => {
 
             const ctx = document.getElementById('myChart') as HTMLCanvasElement;
 
+            if (ctx instanceof HTMLCanvasElement) {
+                const ctx1 = ctx.getContext('2d');
+
+                if (ctx1) {
+                    const existingChart = Chart.getChart(ctx1);
+
+                    // If an existing chart instance is found, destroy it
+                    if (existingChart) {
+                        existingChart.destroy();
+                    }
+                }
+            }
 
             new Chart(ctx, {
                 type: 'doughnut',
