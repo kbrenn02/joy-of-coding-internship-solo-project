@@ -42,28 +42,6 @@ export default function Home() {
         tasks.sort(sortByDateAsc);};
 
     listOfTasks();
-    // console.log(tasks)
-
-    let openCount = 0
-    let inProgressCount = 0
-    let closedCount = 0
-
-    function filterByStatus(task: any) {
-        if (Number.isFinite(task.id) && task.status === "OPEN"){
-            openCount++;
-            return true
-        } else if (Number.isFinite(task.id) && task.status === "IN_PROGRESS"){
-            inProgressCount++;
-            return true
-        } else if (Number.isFinite(task.id) && task.status === "CLOSED") {
-            closedCount++;
-            return true
-        }
-    }
-
-    const tasksByID = tasks.filter(filterByStatus);
-    console.log(tasksByID)
-    console.log("Status open", openCount, "Status in progress", inProgressCount, "Status closed", closedCount)
     
 
     return (

@@ -35,17 +35,40 @@ const DataChart = () => {
 
     console.log(data)
 
+    let openCount = 0
+    let inProgressCount = 0
+    let closedCount = 0
+
+    function filterByStatus(daata: any) {
+        if (Number.isFinite(daata.id) && daata.status === "OPEN"){
+            openCount++;
+            return true
+        } else if (Number.isFinite(daata.id) && daata.status === "IN_PROGRESS"){
+            inProgressCount++;
+            return true
+        } else if (Number.isFinite(daata.id) && daata.status === "CLOSED") {
+            closedCount++;
+            return true
+        }
+    }
+
+    const tasksByID = data.filter(filterByStatus);
+    console.log(tasksByID)
+    console.log("Status open", openCount, "Status in progress", inProgressCount, "Status closed", closedCount)
+
+
     useEffect(() => {
         if (data.length > 0) {
 
             const ctx = document.getElementById('myChart') as HTMLCanvasElement;
+
 
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: ["Open", "In Progress", "Closed"],
                     datasets: [{
-                        data: [1, 2, 3]
+                        data: [openCount, inProgressCount, closedCount]
                         // FIGURE OUT HOW TO ADD THE COUNT OF EACH TASK TYPE TO THE LABEL
                         // backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         // borderColor: 'rgba(75, 192, 192, 1)',
@@ -55,6 +78,9 @@ const DataChart = () => {
             });
         }
     }, [data]);
+
+    // Error: Canvas is already in use. Chart with ID '0' must be destroyed before the canvas with ID 'myChart' can be reused.
+    // I get the above error whenever changes are made to the DB
 
 
     return (
