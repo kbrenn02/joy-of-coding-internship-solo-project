@@ -42,55 +42,29 @@ export default function Home() {
         tasks.sort(sortByDateAsc);};
 
     listOfTasks();
-    console.log(tasks)
+    // console.log(tasks)
 
     let openCount = 0
-    let notOpen = 0
+    let inProgressCount = 0
+    let closedCount = 0
 
     function filterByStatus(task: any) {
-        if (Number.isFinite(task.id) && task.title === "Task 2"){
+        if (Number.isFinite(task.id) && task.status === "OPEN"){
             openCount++;
             return true
-        } else {
-            notOpen++;
-            return false
+        } else if (Number.isFinite(task.id) && task.status === "IN_PROGRESS"){
+            inProgressCount++;
+            return true
+        } else if (Number.isFinite(task.id) && task.status === "CLOSED") {
+            closedCount++;
+            return true
         }
     }
 
     const tasksByID = tasks.filter(filterByStatus);
     console.log(tasksByID)
-    console.log(typeof(tasks))
+    console.log("Status open", openCount, "Status in progress", inProgressCount, "Status closed", closedCount)
     
-    console.log(tasks.filter(filterByStatus))
-    
-
-    const arr = [
-        { id: 15, pop: "hello" },
-        { id: -1, pop: "bye" },
-        { id: 0, pop: "hi" },
-        { id: 3, pop: "hey" },
-        { id: 12.2, pop: "he" },
-        {},
-        { id: null },
-        { id: NaN },
-        { id: "undefined" },
-      ];
-
-      console.log(arr)
-      console.log(typeof(arr))
-      
-      let invalidEntries = 0;
-      
-      function filterByID(item:any) {
-        if (Number.isFinite(item.id) && item.id !== 0 && item.pop === "hey") {
-          return true;
-        }
-        invalidEntries++;
-        return false;
-      }
-      
-      const arrByID = arr.filter(filterByID);
-      console.log(arrByID)
 
     return (
         <div className="h-screen">
