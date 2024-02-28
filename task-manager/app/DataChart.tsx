@@ -33,8 +33,6 @@ const DataChart = () => {
         getData();
     }, []);
 
-    console.log(data)
-
     let openCount = 0
     let inProgressCount = 0
     let closedCount = 0
@@ -53,9 +51,6 @@ const DataChart = () => {
     }
 
     const tasksByID = data.filter(filterByStatus);
-    console.log(tasksByID)
-    console.log("Status open", openCount, "Status in progress", inProgressCount, "Status closed", closedCount)
-
 
     useEffect(() => {
         if (data.length > 0) {
@@ -90,10 +85,6 @@ const DataChart = () => {
             });
         }
     }, [data]);
-
-    // Error: Canvas is already in use. Chart with ID '0' must be destroyed before the canvas with ID 'myChart' can be reused.
-    // I get the above error whenever changes are made to the DB
-
 
     return (
         <div className='w-full h-full flex justify-center'>

@@ -20,9 +20,18 @@ export default function Home() {
     const [tasks, setTasks] = useState<TaskForm[]>([])
 
     useEffect(() => {
-        axios.get(`/api/tasks`).then(function(response) {
-            setTasks(response.data);
-        });
+        const getTasks = async() => {
+            try {
+                axios.get(`/api/tasks`).then(function(response) {
+                    setTasks(response.data);
+                });
+            }
+            catch (error){
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        getTasks();
     }, []);
 
     function sortByDateAsc(a: any, b: any) {      
@@ -42,6 +51,20 @@ export default function Home() {
         tasks.sort(sortByDateAsc);};
 
     listOfTasks();
+    console.log(tasks);
+
+    let nextTask = []
+    function displayNextTask(task: any) {
+        if (task.status === "OPEN" || task.status === "IN_PROGRESS") {
+            nextTask.push(task);
+            return true
+        }
+    }
+    
+    const filterList = tasks.filter(displayNextTask)
+    console.log(filterList)
+    console.log(filterList[0])
+
     
 
     return (
@@ -55,10 +78,10 @@ export default function Home() {
                 <div className="bg-orange-400 w-1/2 h-full p-4 border border-gray-light rounded-xl shadow">
                     {/* getting an "Unhandled Runtime Error" after making an update to the tasks on the table*/}
                     {/* 2/26: getting an "Unhandled Runtime Error" and now it doesn't show anything from the task*/}
-                    {/* <div>{new Date(tasks[0].due).toDateString()}</div>
-                    <div>{tasks[0].title}</div>
-                    <div>{tasks[0].description}</div>
-                    <div>{tasks[0].status}</div> */}
+                    <div>{new Date(filterList[0].due).toDateString()}</div>
+                    <div>{filterList[0].title}</div>
+                    <div>{filterList[0].description}</div>
+                    <div>{filterList[0].status}</div>
                     Placeholder
                 </div>
             </Flex>       
