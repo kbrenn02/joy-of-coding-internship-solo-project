@@ -96,8 +96,8 @@ const DataChart = () => {
 
 
     return (
-        <div>
-            <canvas id="myChart" width="100" height="100"></canvas>
+        <div className='w-full h-full flex justify-center'>
+            <canvas id="myChart" className='w-1/2 h-1/2 flex justify-center'></canvas>
         </div>
     )
 }
