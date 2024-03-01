@@ -79,11 +79,10 @@ const DataChart = () => {
                 data: {
                     labels: ["Open", "In Progress", "Closed"],
                     datasets: [{
-                        data: [openCount, inProgressCount, closedCount]
-                        // FIGURE OUT HOW TO ADD THE COUNT OF EACH TASK TYPE TO THE LABEL
-                        // backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        // borderColor: 'rgba(75, 192, 192, 1)',
-                        // borderWidth: 1
+                        data: [openCount, inProgressCount, closedCount],
+                        backgroundColor: ['rgb(34 197 94)', 'rgb(56 189 248)', 'rgb(252 165 165)'],
+                        borderColor: 'rgb(156 163 175)',
+                        borderWidth: 1
                     }]
                 }
             });
