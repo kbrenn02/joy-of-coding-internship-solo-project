@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
 import { EnumValues } from 'zod';
-import prisma from '@/prisma/client';
-
 
 interface TaskForm {
     id: number;
@@ -16,13 +14,14 @@ interface TaskForm {
 
 const DataChart = () => {
 
-    const [data, setData] = useState<TaskForm[]>([]);
+    const [tasks, setTasks] = useState<TaskForm[]>([]);
 
+    // Had to reuse this function on multiple pages to get the list of tasks from the DB to manipulate on each page
     useEffect(() => {
-        const getData = async() => {
+        const getTasks = async() => {
             try {
                 axios.get(`/api/tasks`).then(function(response) {
-                    setData(response.data);
+                    setTasks(response.data);
                 });
             }
             catch (error){
@@ -30,30 +29,35 @@ const DataChart = () => {
             }
         };
 
-        getData();
+        getTasks();
     }, []);
 
+    // Create variables to edit the count of. These variables are the ones input in the data chart
     let openCount = 0
     let inProgressCount = 0
     let closedCount = 0
 
-    function filterByStatus(daata: any) {
-        if (Number.isFinite(daata.id) && daata.status === "OPEN"){
+    // Loop through the list of tasks and count each task that falls into each category
+    function filterByStatus(task: any) {
+        if (Number.isFinite(task.id) && task.status === "OPEN"){
             openCount++;
             return true
-        } else if (Number.isFinite(daata.id) && daata.status === "IN_PROGRESS"){
+        } else if (Number.isFinite(task.id) && task.status === "IN_PROGRESS"){
             inProgressCount++;
             return true
-        } else if (Number.isFinite(daata.id) && daata.status === "CLOSED") {
+        } else if (Number.isFinite(task.id) && task.status === "CLOSED") {
             closedCount++;
             return true
         }
     }
 
-    const tasksByID = data.filter(filterByStatus);
+    tasks.filter(filterByStatus);
 
+    // Creating the chart. Start by deleting any previous instances of the chart (this solved a bug that forced me to manually
+    // reload the page 4 or 5 times if I wanted to see an updated chart)
+    // Then create a new chart, using the count variables above as the inserted data (to make it dynamic)
     useEffect(() => {
-        if (data.length > 0) {
+        if (tasks.length > 0) {
 
             const ctx = document.getElementById('myChart') as HTMLCanvasElement;
 
@@ -84,7 +88,7 @@ const DataChart = () => {
                 }
             });
         }
-    }, [data]);
+    }, [tasks]);
 
     return (
         <div className='w-full h-full flex justify-center'>
