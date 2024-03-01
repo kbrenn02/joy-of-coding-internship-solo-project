@@ -1,20 +1,11 @@
-import React, { useState, useEffect, ChangeEventHandler } from 'react'
-import { Button, Table, Flex, TableBody } from '@radix-ui/themes';
-import { EnumValues, object } from 'zod';
+import React, { useState } from 'react'
+import { Button, Table, Flex } from '@radix-ui/themes';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-
-interface TaskForm {
-    id: number;
-    title: string;
-    description: string;
-    due: Date;
-    status: EnumValues;
-}
-
 const TaskRow = (task: any) => {
 
+    // useState variables for each title in the database so that I can update them with the user's edited input
     const [isediting, setIsEditing] = useState(false);
     const [title, setTitle] = useState(task.task.title);
     const [description, setDescription] = useState(task.task.description);
@@ -26,7 +17,7 @@ const TaskRow = (task: any) => {
         setIsEditing(!isediting)
     };
 
-    // date is automatically in GMT -- switch to local time before pushing. Convert PST to GMT then push (so 12am PST, submit 8am GMT)
+    // Date is automatically in GMT -- switch to local time before pushing. Convert PST to GMT then push (so 12am PST, submit 8am GMT)
     const saveTask = async () => {
         if (isediting) {
             const data = {
@@ -44,8 +35,7 @@ const TaskRow = (task: any) => {
     }
 
 
-    // this works as a delete function. Was having issues with the refresh, so I had it send the user to the homepage
-    // after deleting a task
+    // Effective delete function. I was having issues with the refresh, so I send the user to the homepage after deleting a task
     const router = useRouter();
     const removeTask = async () => {
 		try {
