@@ -83,10 +83,10 @@ export default function Home() {
                     {/* getting an "Unhandled Runtime Error" after making an update to the tasks on the table*/}
                     {/* 2/26: getting an "Unhandled Runtime Error" and now it doesn't show anything from the task*/}
                     {/* 2/27: Able to show the first data but still getting the above error */}
-                    <div>{new Date(filterList[0].due).toDateString()}</div>
-                    <div>{filterList[0].title}</div>
-                    <div>{filterList[0].description}</div>
-                    <div>{filterList[0].status}</div>
+                    <div>{new Date(filterList[0]?.due).toDateString()}</div>
+                    <div>{filterList[0]?.title}</div>
+                    <div>{filterList[0]?.description}</div>
+                    <div>{filterList[0]?.status}</div>
                     Placeholder
                 </div>
             </Flex>       
