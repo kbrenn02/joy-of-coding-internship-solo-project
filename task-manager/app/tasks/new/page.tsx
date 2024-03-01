@@ -17,9 +17,11 @@ type FormValues = {
     due: Date;
 }
 
+
 const NewTaskPage = () => {
     const router = useRouter();
 
+    // This was from the Programming with Mosh video
     const {register, control, handleSubmit} = useForm<TaskForm>();
     const form = useForm<FormValues>({
         defaultValues: {
@@ -49,7 +51,6 @@ const NewTaskPage = () => {
                 render={({ field }) => <SimpleMDE placeholder='Description' {...field}/>}
             />
             
-
             {/* Due date input */}
             <div className='m-4'>
                 <label className='p-4 font-bold italic' htmlFor='due'>Select a due date for this task</label>

@@ -7,11 +7,12 @@ import React from 'react'
 import { usePathname } from 'next/navigation';
 import classnames from 'classnames';
 
+
 const NavBar = () => {
     
     const currentPath = usePathname();
 
-    /* create an array of links to be called via the mapping below. That way, if we want to add another page/link, we 
+    /* Create an array of links to be called via the mapping below. That way, if we want to add another page/link, we 
     add it here, and not have to change the CSS/build the components in so many places*/
     const links = [
         { label: 'Dashboard', href: '/' },
@@ -29,7 +30,8 @@ const NavBar = () => {
                 {links.map(link => 
                     <Link 
                         key={link.href}
-                        className={classnames({ //this is a place where the CSS can be updated to colors I like
+                        className={classnames({ //this is a place where the CSS can be updated to colors I like. May need to update
+                            // once a color scheme is decided on
                             'text-zinc-900' : link.href === currentPath,
                             'text-zinc-500' : link.href !== currentPath,
                             'hover:text-zinc-800 transition-colors' : true

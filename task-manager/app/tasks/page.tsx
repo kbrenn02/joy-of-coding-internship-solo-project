@@ -3,16 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table, Flex } from '@radix-ui/themes';
 import Link from 'next/link';
-import prisma from '@/prisma/client';
 import EditPage from './editPage';
 
 
+// This page is the task page that shows the table with all the info in the database
 const TasksPage = () => {
     
     const [inputs, setInputs] = useState('');
 
     return (
         <>
+        {/* New Task button and Filtering options */}
             <Flex gap="3">
                     <Button 
                     className='ml-4'>
@@ -27,6 +28,7 @@ const TasksPage = () => {
                     </select>
             </Flex>
 
+        {/* Headers for the table. The last header is blank but creates a column for the Edit/Delete/Save buttons to live in */}
             <Table.Root className='mt-4'>
                 <Table.Header>
                     <Table.Row>
