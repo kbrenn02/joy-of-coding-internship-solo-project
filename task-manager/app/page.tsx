@@ -18,6 +18,7 @@ interface TaskForm {
 export default function Home() {
 
     const [tasks, setTasks] = useState<TaskForm[]>([])
+    const [filterList, setFilterList] = useState<TaskForm[]>([])
 
     useEffect(() => {
         const getTasks = async() => {
@@ -53,19 +54,22 @@ export default function Home() {
     listOfTasks();
     console.log(tasks);
 
-    let nextTask = []
-    function displayNextTask(task: any) {
+    
+    useEffect(() => {
+        let nextTask = []
+        function displayNextTask(task: any) {
         if (task.status === "OPEN" || task.status === "IN_PROGRESS") {
             nextTask.push(task);
             return true
         }
     }
+        setFilterList(tasks.filter(displayNextTask))
+    }, [tasks]);
     
-    const filterList = tasks.filter(displayNextTask)
+    // const filterList = tasks.filter(displayNextTask)
     console.log(filterList)
     console.log(filterList[0])
-
-    
+    // console.log(tasks[0])
 
     return (
         <div className="h-screen">
@@ -78,6 +82,7 @@ export default function Home() {
                 <div className="bg-orange-400 w-1/2 h-full p-4 border border-gray-light rounded-xl shadow">
                     {/* getting an "Unhandled Runtime Error" after making an update to the tasks on the table*/}
                     {/* 2/26: getting an "Unhandled Runtime Error" and now it doesn't show anything from the task*/}
+                    {/* 2/27: Able to show the first data but still getting the above error */}
                     <div>{new Date(filterList[0].due).toDateString()}</div>
                     <div>{filterList[0].title}</div>
                     <div>{filterList[0].description}</div>
