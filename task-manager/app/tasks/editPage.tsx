@@ -1,12 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Table, Button } from '@radix-ui/themes';
+import { Table } from '@radix-ui/themes';
 import axios from 'axios';
 import { EnumValues } from 'zod';
 import TaskRow from './taskRow';
 
-    
 interface TaskForm {
     id: number;
     title: string;
@@ -20,14 +19,15 @@ const EditPage = (input: any) => {
  
     const [tasks, setTasks] = useState<TaskForm[]>([])
 
-    //this works to show the data in the table based on id number
+    // Default to showing the data in the table based on ID number
     useEffect(() => {
         axios.get(`/api/tasks`).then(function(response) {
             setTasks(response.data);
         });
     }, []);
 
-    
+    // Functions that supporting various sorting/filtering methods. I plan on adding more sorting/filtering options, so I 
+    // will need to update this section
     function sortByStatusDes(a: any, b: any) {      
         const A = a.status;
         const B = b.status;
@@ -67,7 +67,7 @@ const EditPage = (input: any) => {
         return comparison * -1; 
         }
     
-    
+    // This is the funtion that actually updates the sorting of the task list. The default "filter" sorts by ID aka Date created
     const listOfTasks = (input: any) => {
         if (input == "due") {
             tasks.sort(sortByDateAsc);
@@ -80,17 +80,15 @@ const EditPage = (input: any) => {
 
     listOfTasks(input.input)
 
-    // the tests I needed to perform to find out what I needed to input into the listOfTasks function. I'm sure there's
+    // The tests I needed to perform to find out what I needed to input into the listOfTasks function. I'm sure there's
     // a better way to write the above code, but what I found works so I'm not complaining
-    // // console.log(typeof(input))
-    // console.log(input.input)
-    // console.log(typeof(input.input))
-    // // console.log("filtered")
-    // console.log(tasks)
-    // // console.log(tasks.sort(compare))
-    // // console.log(input)
-
-
+        // // console.log(typeof(input))
+        // console.log(input.input)
+        // console.log(typeof(input.input))
+        // // console.log("filtered")
+        // console.log(tasks)
+        // // console.log(tasks.sort(compare))
+        // // console.log(input)
 
     return (
         <>
