@@ -52,7 +52,7 @@ export default function Home() {
         tasks.sort(sortByDateAsc);};
 
     listOfTasks();
-    console.log(tasks);
+    // console.log(tasks);
 
     
     useEffect(() => {
@@ -67,27 +67,65 @@ export default function Home() {
     }, [tasks]);
     
     // const filterList = tasks.filter(displayNextTask)
-    console.log(filterList)
-    console.log(filterList[0])
+    // console.log(filterList)
+    // console.log(filterList[0])
     // console.log(tasks[0])
 
     return (
         <div className="h-screen">
-        {/* Need to center the title "welcome to task manager" */}
             <div className="flex justify-center h-16 text-3xl font-extrabold">Welcome to your Task Manager</div>
             <Flex gap="2" className="w-full h-full">
-                <div className="bg-white w-1/2 h-1/2 p-4 border border-gray-light rounded-xl shadow">
+                <div className="bg-cyan-100 w-1/2 h-1/2 p-4 border border-gray-light rounded-xl shadow">
                     <DataChart />
                 </div>
-                <div className="bg-orange-400 w-1/2 h-full p-4 border border-gray-light rounded-xl shadow">
-                    {/* getting an "Unhandled Runtime Error" after making an update to the tasks on the table*/}
-                    {/* 2/26: getting an "Unhandled Runtime Error" and now it doesn't show anything from the task*/}
-                    {/* 2/27: Able to show the first data but still getting the above error */}
-                    <div>{new Date(filterList[0]?.due).toDateString()}</div>
-                    <div>{filterList[0]?.title}</div>
-                    <div>{filterList[0]?.description}</div>
-                    <div>{filterList[0]?.status}</div>
-                    Placeholder
+                <div className="w-1/2 h-full p-4 border border-gray-light rounded-xl shadow">
+                    {filterList.length > 0 ? (
+                        <>
+                            <div className="grid grid-cols-3 gap-2 mb-4">
+                                <div>
+                                    <h3 className="text-xl font-bold mb-1">Due Date</h3>
+                                    <h5>{new Date(filterList[0].due).toDateString()}</h5>
+                                </div>
+                                <div className="col-span-2">
+                                    <h3 className="text-xl font-bold mb-1">Status</h3>
+                                    <h5 className="text-xl tracking-widest font-bold text-violet-800">{filterList[0].status}</h5>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-3">
+                                <div>
+                                    <h3 className="mb-2 text-xl font-bold">Task</h3>
+                                    <h5>{filterList[0].title}</h5>
+                                </div>
+                                <div className="col-span-2">
+                                    <h3 className="mb-2 text-xl font-bold">Task Description</h3>
+                                    <h5>{filterList[0].description}</h5>
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="grid grid-cols-3 gap-2 mb-4">
+                                <div>
+                                    <h3 className="text-xl font-bold mb-1">Due Date</h3>
+                                    <h5  className="italic">updating...</h5>
+                                </div>
+                                <div className="col-span-2">
+                                    <h3 className="text-xl font-bold mb-1">Status</h3>
+                                    <h5 className="italic">updating...</h5>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-3">
+                                <div>
+                                    <h3 className="mb-2 text-xl font-bold">Task</h3>
+                                    <h5 className="italic">updating...</h5>
+                                </div>
+                                <div className="col-span-2">
+                                    <h3 className="mb-2 text-xl font-bold">Task Description</h3>
+                                    <h5 className="italic">updating...</h5>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
             </Flex>       
         </div>
