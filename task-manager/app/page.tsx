@@ -20,6 +20,7 @@ export default function Home() {
     const [tasks, setTasks] = useState<TaskForm[]>([])
     const [filterList, setFilterList] = useState<TaskForm[]>([])
 
+    // Get the list of tasks from the database to work with for displaying the next due task
     useEffect(() => {
         const getTasks = async() => {
             try {
@@ -35,6 +36,7 @@ export default function Home() {
         getTasks();
     }, []);
 
+    // Sort the list of tasks in ascending ordering, so the next due task is the first element in the array
     function sortByDateAsc(a: any, b: any) {      
         const A = a.due;
         const B = b.due;
@@ -50,11 +52,10 @@ export default function Home() {
 
     const listOfTasks = () => {
         tasks.sort(sortByDateAsc);};
-
     listOfTasks();
-    // console.log(tasks);
 
-    
+    // Update the homepage "Next Due Task" every time the page is refreshed/the task list in the database is updated
+    // This function takes the reordered list (see Sort function above) and filters it for only OPEN and IN_PROGRESS tasks
     useEffect(() => {
         let nextTask = []
         function displayNextTask(task: any) {
@@ -65,11 +66,9 @@ export default function Home() {
     }
         setFilterList(tasks.filter(displayNextTask))
     }, [tasks]);
-    
-    // const filterList = tasks.filter(displayNextTask)
-    // console.log(filterList)
-    // console.log(filterList[0])
-    // console.log(tasks[0])
+
+    // Because I sorted and filtered the list, the first element in the array is the next OPEN/IN_PROGRESS task, 
+    // therefore, I can just call the first element as my variables to display
 
     return (
         <div className="h-screen">
