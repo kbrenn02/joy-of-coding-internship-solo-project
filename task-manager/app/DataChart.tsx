@@ -87,7 +87,7 @@ const DataChart = () => {
                 }
             });
         }
-    }, [tasks]);
+    }, [tasks, closedCount, inProgressCount, openCount]);
 
     return (
         <div className='w-full h-full flex justify-center'>
