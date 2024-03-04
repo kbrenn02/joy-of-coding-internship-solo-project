@@ -1,4 +1,5 @@
 // HomePage
+// When trying to deploy on Vercel, it either would fail at the initial build or it would build and display a 404 error
 'use client';
 
 import { Flex } from "@radix-ui/themes";
