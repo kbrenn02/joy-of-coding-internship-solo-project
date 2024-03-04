@@ -23,8 +23,7 @@ Create a web application that allows users to add, edit, and delete personal tas
 - **Task Organization:** Implement task organization or filtering options, such as sorting by due date or categorizing tasks.
 - **User Authentication (optional bonus points):** Add user registration and authentication to allow multiple users to manage their personal tasks.
 - **Double Optional:** Build in the following features -- 
-1. An interactive Gantt chart feature
-2. An issue summary option (chart showing number of issues by type (open, in progress, not started, or completed) or by recency (created in last 5 days, etc.)
+1. An issue summary (chart showing number of issues by type (open, in progress, or closed)
 
 
 _Tech Stack:_
