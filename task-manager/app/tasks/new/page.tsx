@@ -24,17 +24,18 @@ const NewTaskPage = () => {
         // This code runs on the client side
         const isOnline = navigator.onLine;
         // Perform actions based on navigator or other browser APIs
+        const form = useForm<FormValues>({
+                defaultValues: {
+                    due: new Date(),
+                }
+            })
     }, []);
     
     const router = useRouter();
 
     // This was from the Programming with Mosh video
     const {register, control, handleSubmit} = useForm<TaskForm>();
-    const form = useForm<FormValues>({
-        defaultValues: {
-            due: new Date(),
-        }
-    })
+    
 
     return (
         <form 
