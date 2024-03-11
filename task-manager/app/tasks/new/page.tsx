@@ -6,7 +6,6 @@ import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 interface TaskForm {
     title: string;
@@ -19,23 +18,16 @@ type FormValues = {
 }
 
 const NewTaskPage = () => {
-
-    useEffect(() => {
-        // This code runs on the client side
-        const isOnline = navigator.onLine;
-        // Perform actions based on navigator or other browser APIs
-        const form = useForm<FormValues>({
-                defaultValues: {
-                    due: new Date(),
-                }
-            })
-    }, []);
     
     const router = useRouter();
 
     // This was from the Programming with Mosh video
     const {register, control, handleSubmit} = useForm<TaskForm>();
-    
+    const form = useForm<FormValues>({
+        defaultValues: {
+            due: new Date(),
+        }
+    })
 
     return (
         <form 
