@@ -23,7 +23,9 @@ Create a web application that allows users to add, edit, and delete personal tas
 - **Task Organization:** Implement task organization or filtering options, such as sorting by due date or categorizing tasks.
 - **User Authentication (optional bonus points):** Add user registration and authentication to allow multiple users to manage their personal tasks.
 - **Double Optional:** Build in the following features -- 
-1. An issue summary (chart showing number of issues by type (open, in progress, or closed)
+   1. An issue summary (chart showing number of issues by type (open, in progress, or closed)
+   2. Launch a demo of the app using vercel
+   3. Present different user selected color options (and save the options for the next time the user logs in)
 
 
 _Tech Stack:_
