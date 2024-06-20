@@ -10,16 +10,21 @@ The Personal Task Manager requires Python (or Python 3 for Mac). To download, pl
 ### Run the Program
 To run the Personal Task Manager program on your local device:
 1. Clone the github repo to your IDE (I personally use VSCode)
-2. In the terminal, run `npm run dev`
+2. Ensure that MySQL is active by running the following in the terminal: `sudo /usr/local/mysql/support-files/mysql.server start`
+3. Run `npx prisma migrate dev` to ensure the DB is in sync with the schema
+4. In the terminal, run `npm run dev`
 This should open up the application, likely on port localhost:3000, unless this port is already in use
 
 ### Usage Instructions
 Once you have the applicaiton running on your local device, play around on it. Create tasks, delete tasks, update project, see how the components change and interact.
 As of now, this is V1 and contains known bugs that do not hinder the functionality. I am exploring other projects and technologies before squashing the bugs!
 
-### FINAL PROJECT V1:
+### FINAL PROJECT 
+## V1:
 [{Loom demo}](https://www.loom.com/share/87481db15eb14eb49e943609f9a55567?sid=800c265e-328b-42d0-b6b6-5167f2ca8488)
-Note: was having some issues with the prisma db, so this is a previous video
+<br />
+## V2:
+[{Loom demo}](https://www.loom.com/share/6890d2cfe03642c8bc5edf65f4c0dff9?sid=12d30c7d-d8a7-480a-92f2-b56c11f2d99e)
 
 <br />
 <br />
