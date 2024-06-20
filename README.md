@@ -18,7 +18,8 @@ Once you have the applicaiton running on your local device, play around on it. C
 As of now, this is V1 and contains known bugs that do not hinder the functionality. I am exploring other projects and technologies before squashing the bugs!
 
 ### FINAL PROJECT V1:
-{inset loom demo}
+[{Loom demo}](https://www.loom.com/share/87481db15eb14eb49e943609f9a55567?sid=800c265e-328b-42d0-b6b6-5167f2ca8488)
+Note: was having some issues with the prisma db, so this is a previous video
 
 <br />
 <br />
